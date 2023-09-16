@@ -12,6 +12,8 @@ router.put("/resetpassword", ctrls.resetPassword);
 router.get("/", [verifyAccessToken, isAdmin], ctrls.getUsers); // role là user thì cook nhé
 router.delete("/", [verifyAccessToken, isAdmin], ctrls.deleteUser); // role là user thì cook nhé
 router.put("/current", [verifyAccessToken], ctrls.updateUser);
+router.put("/address", [verifyAccessToken], ctrls.updateUserAddress);
+router.put("/cart", [verifyAccessToken], ctrls.updateCart);
 router.put("/:uid", [verifyAccessToken, isAdmin], ctrls.updateUserByAdmin); // role là user thì cook nhé
 
 module.exports = router;
