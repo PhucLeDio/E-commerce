@@ -1,13 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import { formatMoney } from "../ultils/helpers";
-import label from "../assets/label.png";
-import newlabel from "../assets/newProduct.png";
+import label from "../assets/trending.png";
+import newlabel from "../assets/new.png";
+import { renderStarFromNumber } from "../ultils/helpers";
+import { SelectOption } from "./index";
+import icons from "../ultils/icons";
+
+const { AiFillEye, AiOutlineMenu, AiFillHeart } = icons;
 
 const Product = ({ productData, isNew }) => {
+  const [isShowOption, setIsShowOption] = useState(false);
   return (
     <div className="w-full text-base px-[10px]">
-      <div className="w-full border p-[15px] flex flex-col items-center">
+      <div
+        className="w-full border p-[15px] flex flex-col items-center"
+        onMouseEnter={(e) => {
+          e.stopPropagation();
+          setIsShowOption(true);
+        }}
+        onMouseLeave={(e) => {
+          e.stopPropagation();
+          setIsShowOption(false);
+        }}
+      >
         <div className="w-full relative">
+          {isShowOption && (
+            <div className="absolute bottom-[-10px] left-0 right-0 flex justify-center gap-4 animate-slide-top">
+              <SelectOption icon={<AiFillHeart />} />
+              <SelectOption icon={<AiOutlineMenu />} />
+              <SelectOption icon={<AiFillEye />} />
+            </div>
+          )}
           <img
             src={
               productData?.thumb ||
@@ -21,14 +44,16 @@ const Product = ({ productData, isNew }) => {
             alt=""
             className={
               isNew
-                ? "absolute top-[-22px] left-[-28px] w-[70px]"
-                : "absolute top-[-16px] left-[-28px] w-[100px] h-[35px] object-cover"
+                ? "absolute top-[-1px] left-[185px] w-[70px] "
+                : "absolute top-[-1px] left-[185px] w-[100px] h-[35px] object-cover"
             }
           />
         </div>
         <div className="flex flex-col mt-[15px] items-start gap-1 w-full">
           <span className="line-clamp-1">{productData?.title}</span>
-          <span>⭐️⭐️⭐️⭐️⭐️</span>
+          <span className="flex">
+            {renderStarFromNumber(productData?.totalRatings)}
+          </span>
           <span>{`${formatMoney(productData?.price)} VND`}</span>
         </div>
       </div>
