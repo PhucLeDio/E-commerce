@@ -10,6 +10,7 @@ import {
   AiFillHeart,
 } from "react-icons/ai";
 import { FaUserCircle } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 
 const icons = {
   RiPhoneFill,
@@ -22,6 +23,7 @@ const icons = {
   AiFillEye,
   AiOutlineMenu,
   AiFillHeart,
+  FcGoogle,
 };
 
 export default icons;
