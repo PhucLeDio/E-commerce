@@ -1,6 +1,12 @@
 import React, { useCallback, useState } from "react";
 import icons from "../../ultils/icons";
 import { InputField, Button } from "../../components";
+import { apiRegister, apiLogin } from "../../apis/user";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import path from "../../ultils/path";
+import { register } from "../../store/user/userSlice";
+import { useDispatch } from "react-redux";
 
 // const colors = {
 //   primary: "#060606",
@@ -11,20 +17,60 @@ import { InputField, Button } from "../../components";
 const { FcGoogle } = icons;
 
 const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [payload, setPayload] = useState({
     email: "",
     password: "",
-    name: "",
+    firstname: "",
+    lastname: "",
+    mobile: "",
   });
 
   const [isRegister, setIsRegister] = useState(false);
 
-  const handleSubmit = useCallback(
-    (params) => {
-      console.log(payload);
-    },
-    [payload]
-  );
+  const resetPayload = () => {
+    setPayload({
+      email: "",
+      password: "",
+      firstname: "",
+      lastname: "",
+      mobile: "",
+    });
+  };
+
+  const handleSubmit = useCallback(async () => {
+    const { firstname, lastname, mobile, ...data } = payload;
+    if (isRegister) {
+      const response = await apiRegister(payload);
+      if (response.success) {
+        Swal.fire({
+          title: "Congratulations",
+          text: response.mes,
+          icon: "success",
+        }).then(() => {
+          setIsRegister(false);
+          resetPayload();
+        });
+      } else {
+        Swal.fire({ title: "Oops...", text: response.mes, icon: "error" });
+      }
+    } else {
+      const rs = await apiLogin(data);
+      if (rs.success) {
+        dispatch(
+          register({
+            isLoggedIn: true,
+            token: rs.accessToken,
+            userData: rs.userData,
+          })
+        );
+        navigate(`/${path.HOME}`);
+      } else {
+        Swal.fire({ title: "Oops...", text: rs.mes, icon: "error" });
+      }
+    }
+  }, [payload, isRegister]);
 
   return (
     <div className="w-full h-screen flex items-start">
@@ -63,17 +109,31 @@ const Login = () => {
 
           <div className="w-full flex flex-col">
             {isRegister && (
-              <InputField
-                value={payload.name}
-                setValue={setPayload}
-                nameKey="name"
-              />
+              <div className="flex items-center gap-2">
+                <InputField
+                  value={payload.firstname}
+                  setValue={setPayload}
+                  nameKey="firstname"
+                />
+                <InputField
+                  value={payload.lastname}
+                  setValue={setPayload}
+                  nameKey="lastname"
+                />
+              </div>
             )}
             <InputField
               value={payload.email}
               setValue={setPayload}
               nameKey="email"
             />
+            {isRegister && (
+              <InputField
+                value={payload.mobile}
+                setValue={setPayload}
+                nameKey="mobile"
+              />
+            )}
             <InputField
               value={payload.password}
               setValue={setPayload}
@@ -88,7 +148,7 @@ const Login = () => {
               <p className="text-sm">Remember me for 30 days</p>
             </div>
 
-            <p className="text-sm font-medium whitespace-nowrap cursor-pointer underline underline-offset-2">
+            <p className="text-sm font-medium whitespace-nowrap cursor-pointer underline underline-offset-2 text-main">
               Forgot Password ?
             </p>
           </div>
@@ -103,7 +163,7 @@ const Login = () => {
               style={
                 isRegister
                   ? `w-full text-[#060606] my-2 font-semibold bg-white border border-black rounded-md p-4 text-center flex items-center justify-center cursor-pointer`
-                  : `w-full text-white my-2 font-semibold bg-[#060606] rounded-md p-4 text-center flex items-center justify-center cursor-pointer`
+                  : `w-full text-white my-2 font-semibold bg-main rounded-md p-4 text-center flex items-center justify-center cursor-pointer`
               }
               handleOnClick={handleSubmit}
             />
