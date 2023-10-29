@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import path from "../../ultils/path";
 import { register } from "../../store/user/userSlice";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 // const colors = {
 //   primary: "#060606",
@@ -44,6 +45,9 @@ const Login = () => {
   const handleForgotPassword = async () => {
     const respone = await apiForgotPassword({ email });
     console.log(respone);
+    if (respone.success) {
+      toast.success(respone.mes, { theme: "light" });
+    } else toast.info(respone.mess, { theme: "light" });
   };
 
   // const [isHidden, setIsHidden] = useState(false);
@@ -87,44 +91,47 @@ const Login = () => {
 
   return (
     <div className="w-full h-screen flex items-start">
-      <div className="absolute top-0 left-0 bottom-0 right-0 bg-overlay flex justify-center items-center py-8 z-50">
-        <div className="bg-white w-full max-w-md p-6 rounded-lg shadow-lg">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
-            Reset Password
-          </h2>
-          <form>
-            <div className="mb-4">
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Email Address
-              </label>
-              <input
-                type="text"
-                id="email"
-                className="mt-1 pt-1 pb-2 w-full border-gray-300 border-b outline-none"
-                placeholder="you@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-            <div className="mb-4 flex gap-4">
-              <Button
-                name="Submit"
-                handleOnClick={handleForgotPassword}
-                style={`w-full bg-red-500 text-white p-3 hover:bg-red-600 transition duration-300`}
-              />
-              <button
-                type="Cancel"
-                className="w-full bg-red-500 text-white p-3 hover:bg-red-600 transition duration-300"
-              >
-                Cancel
-              </button>
-            </div>
-          </form>
+      {isForgotPassword && (
+        <div className="absolute animate-slide-right top-0 left-0 bottom-0 right-0 bg-overlay flex justify-center items-center py-8 z-50">
+          <div className="bg-white w-full max-w-md p-6 rounded-lg shadow-lg">
+            <h2 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
+              Reset Password
+            </h2>
+            <form>
+              <div className="mb-4">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Email Address
+                </label>
+                <input
+                  type="text"
+                  id="email"
+                  className="mt-1 pt-1 pb-2 w-full border-gray-300 border-b outline-none"
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              <div className="mb-4 flex gap-4">
+                <Button
+                  name="Submit"
+                  handleOnClick={handleForgotPassword}
+                  style={`w-full bg-red-500 text-white p-3 hover:bg-red-600 transition duration-300`}
+                />
+                <Button
+                  name="Cancel"
+                  style={`w-full bg-red-500 text-white p-3 hover:bg-red-600 transition duration-300`}
+                  handleOnClick={() => {
+                    setIsForgotPassword(false);
+                  }}
+                />
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
+      )}
       <div className="relative w-1/2 h-full flex flex-col">
         <div className="absolute top-[20%] left-[10%] flex flex-col">
           <h1 className="text-4xl text-white font-bold my-4">
@@ -199,9 +206,12 @@ const Login = () => {
               <p className="text-sm">Remember me for 30 days</p>
             </div>
 
-            <p className="text-sm font-medium whitespace-nowrap cursor-pointer underline underline-offset-2 text-main">
+            <span
+              className="text-sm font-medium whitespace-nowrap cursor-pointer underline underline-offset-2 text-main"
+              onClick={() => setIsForgotPassword(true)}
+            >
               Forgot Password ?
-            </p>
+            </span>
           </div>
 
           {/* 
