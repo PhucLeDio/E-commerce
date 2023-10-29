@@ -179,7 +179,7 @@ const forgotPassword = asyncHandler(async (req, res) => {
   const resetToken = user.createPasswordChangedToken();
   await user.save();
 
-  const html = `xin vui lòng click vào link dưới đây để xác nhận thay đổi mật khẩu của bạn. Link này sẽ hết hạn sau 15 phút. <a href=${process.env.CLIENT_URL}/reset-password/${resetToken}>Click here</a>`;
+  const html = `Please click on the link below to confirm your password change. This link will expire after 15 minutes. <a href=${process.env.CLIENT_URL}/reset-password/${resetToken}>Click here</a>`;
 
   const data = {
     email,
@@ -189,8 +189,10 @@ const forgotPassword = asyncHandler(async (req, res) => {
 
   const rs = await sendMail(data);
   return res.status(200).json({
-    success: true,
-    rs,
+    success: rs.respone?.includes("OK") ? false : true,
+    mes: rs.respone?.includes("OK")
+      ? "Something went wrong"
+      : "Check your mail please",
   });
 });
 
