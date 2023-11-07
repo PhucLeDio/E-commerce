@@ -1,13 +1,14 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import icons from "../../ultils/icons";
 import { InputField, Button } from "../../components";
 import { apiRegister, apiLogin, apiForgotPassword } from "../../apis/user";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import path from "../../ultils/path";
-import { register } from "../../store/user/userSlice";
+import { login } from "../../store/user/userSlice";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import { validate } from "../../ultils/helpers";
 
 // const colors = {
 //   primary: "#060606",
@@ -41,6 +42,8 @@ const Login = () => {
     });
   };
 
+  const [invalidFields, setInvalidFields] = useState([]);
+
   const [email, setEmail] = useState("");
   const handleForgotPassword = async () => {
     const respone = await apiForgotPassword({ email });
@@ -50,41 +53,46 @@ const Login = () => {
     } else toast.info(respone.mess, { theme: "light" });
   };
 
-  // const [isHidden, setIsHidden] = useState(false);
-
-  // const handleCancel = () => {
-  //   setIsHidden(true);
-  // };
+  useEffect(() => {
+    resetPayload();
+  }, [isRegister]);
 
   const handleSubmit = useCallback(async () => {
     const { firstname, lastname, mobile, ...data } = payload;
-    if (isRegister) {
-      const response = await apiRegister(payload);
-      if (response.success) {
-        Swal.fire({
-          title: "Congratulations",
-          text: response.mes,
-          icon: "success",
-        }).then(() => {
-          setIsRegister(false);
-          resetPayload();
-        });
+
+    const invalids = isRegister
+      ? validate(payload, setInvalidFields)
+      : validate(data, setInvalidFields);
+
+    if (invalids === 0) {
+      if (isRegister) {
+        const response = await apiRegister(payload);
+        if (response.success) {
+          Swal.fire({
+            title: "Congratulations",
+            text: response.mes,
+            icon: "success",
+          }).then(() => {
+            setIsRegister(false);
+            resetPayload();
+          });
+        } else {
+          Swal.fire({ title: "Oops...", text: response.mes, icon: "error" });
+        }
       } else {
-        Swal.fire({ title: "Oops...", text: response.mes, icon: "error" });
-      }
-    } else {
-      const rs = await apiLogin(data);
-      if (rs.success) {
-        dispatch(
-          register({
-            isLoggedIn: true,
-            token: rs.accessToken,
-            userData: rs.userData,
-          })
-        );
-        navigate(`/${path.HOME}`);
-      } else {
-        Swal.fire({ title: "Oops...", text: rs.mes, icon: "error" });
+        const rs = await apiLogin(data);
+        if (rs.success) {
+          dispatch(
+            login({
+              isLoggedIn: true,
+              token: rs.accessToken,
+              userData: rs.userData,
+            })
+          );
+          navigate(`/${path.HOME}`);
+        } else {
+          Swal.fire({ title: "Oops...", text: rs.mes, icon: "error" });
+        }
       }
     }
   }, [payload, isRegister]);
@@ -172,11 +180,15 @@ const Login = () => {
                   value={payload.firstname}
                   setValue={setPayload}
                   nameKey="firstname"
+                  invalidFields={invalidFields}
+                  setInvalidFields={setInvalidFields}
                 />
                 <InputField
                   value={payload.lastname}
                   setValue={setPayload}
                   nameKey="lastname"
+                  invalidFields={invalidFields}
+                  setInvalidFields={setInvalidFields}
                 />
               </div>
             )}
@@ -184,12 +196,16 @@ const Login = () => {
               value={payload.email}
               setValue={setPayload}
               nameKey="email"
+              invalidFields={invalidFields}
+              setInvalidFields={setInvalidFields}
             />
             {isRegister && (
               <InputField
                 value={payload.mobile}
                 setValue={setPayload}
                 nameKey="mobile"
+                invalidFields={invalidFields}
+                setInvalidFields={setInvalidFields}
               />
             )}
             <InputField
@@ -197,6 +213,8 @@ const Login = () => {
               setValue={setPayload}
               nameKey="password"
               type="password"
+              invalidFields={invalidFields}
+              setInvalidFields={setInvalidFields}
             />
           </div>
 

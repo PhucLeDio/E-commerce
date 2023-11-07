@@ -15,16 +15,26 @@ const inputField = ({
       : "";
 
   return (
-    <input
-      type={type || "text"}
-      className="w-full text-black py-2 my-2 bg-transparent border-b border-black outline-none focus:outline-none"
-      placeholder={placeholder}
-      value={value}
-      onChange={(e) =>
-        setValue((prev) => ({ ...prev, [nameKey]: e.target.value }))
-      }
-    />
+    <div>
+      <input
+        type={type || "text"}
+        className="w-full text-black py-2 my-2 bg-transparent border-b border-black outline-none focus:outline-none"
+        placeholder={placeholder}
+        value={value}
+        onChange={(e) =>
+          setValue((prev) => ({ ...prev, [nameKey]: e.target.value }))
+        }
+        onFocus={() => setInvalidFields([])}
+      />
+      {invalidFields?.some((el) => el.name === nameKey) && (
+        <small className="text-main tetx-[10px] italic">
+          {invalidFields.find((el) => el.name === nameKey)?.mes}
+        </small>
+      )}
+    </div>
   );
 };
+
+// [{name: password, mes: required}]
 
 export default inputField;
