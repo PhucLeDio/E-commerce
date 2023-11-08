@@ -1,7 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
 import icons from "../../ultils/icons";
 import { InputField, Button } from "../../components";
-import { apiRegister, apiLogin, apiForgotPassword } from "../../apis/user";
+import {
+  apiRegister,
+  apiLogin,
+  apiForgotPassword,
+  apiFinalRegister,
+} from "../../apis/user";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import path from "../../ultils/path";
@@ -29,6 +34,8 @@ const Login = () => {
     mobile: "",
   });
 
+  const [isVerifiedEmail, setIsVerifiedEmail] = useState(false);
+  const [invalidFields, setInvalidFields] = useState([]);
   const [isRegister, setIsRegister] = useState(false);
   const [isForgotPassword, setIsForgotPassword] = useState(false);
 
@@ -42,8 +49,7 @@ const Login = () => {
     });
   };
 
-  const [invalidFields, setInvalidFields] = useState([]);
-
+  const [token, setToken] = useState("");
   const [email, setEmail] = useState("");
   const handleForgotPassword = async () => {
     const respone = await apiForgotPassword({ email });
@@ -68,14 +74,7 @@ const Login = () => {
       if (isRegister) {
         const response = await apiRegister(payload);
         if (response.success) {
-          Swal.fire({
-            title: "Congratulations",
-            text: response.mes,
-            icon: "success",
-          }).then(() => {
-            setIsRegister(false);
-            resetPayload();
-          });
+          setIsVerifiedEmail(true);
         } else {
           Swal.fire({ title: "Oops...", text: response.mes, icon: "error" });
         }
@@ -97,8 +96,46 @@ const Login = () => {
     }
   }, [payload, isRegister]);
 
+  const finalRegister = async () => {
+    const response = await apiFinalRegister(token);
+    if (response.success) {
+      Swal.fire({
+        title: "Congratulations",
+        text: response.mes,
+        icon: "success",
+      }).then(() => {
+        setIsRegister(false);
+        resetPayload();
+      });
+    } else {
+      Swal.fire({ title: "Oops...", text: response.mes, icon: "error" });
+    }
+    setIsVerifiedEmail(false);
+    setToken("");
+  };
+
   return (
     <div className="w-full h-screen flex items-start">
+      {isVerifiedEmail && (
+        <div className="absolute top-0 left-0 right-0 bottom-0 bg-overlay z-50 flex flex-col justify-center items-center">
+          <div className="bg-white  rounded-md p-8">
+            <h4 className="">Enter the code here:</h4>
+            <input
+              type="text"
+              value={token}
+              onChange={(e) => setToken(e.target.value)}
+              className="p-2 border rounded-md outline-none"
+            />
+            <button
+              type="button"
+              className="px-4 py-2 bg-main font-semibold text-white rounded-md ml-1"
+              onClick={finalRegister}
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      )}
       {isForgotPassword && (
         <div className="absolute animate-slide-right top-0 left-0 bottom-0 right-0 bg-overlay flex justify-center items-center py-8 z-50">
           <div className="bg-white w-full max-w-md p-6 rounded-lg shadow-lg">
