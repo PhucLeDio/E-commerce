@@ -11,6 +11,7 @@ import {
 } from "react-icons/ai";
 import { FaUserCircle } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import { BiLogOut } from "react-icons/bi";
 
 const icons = {
   RiPhoneFill,
@@ -24,6 +25,7 @@ const icons = {
   AiOutlineMenu,
   AiFillHeart,
   FcGoogle,
+  BiLogOut,
 };
 
 export default icons;
