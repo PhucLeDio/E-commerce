@@ -8,6 +8,7 @@ import {
   AiFillEye,
   AiOutlineMenu,
   AiFillHeart,
+  AiFillCaretRight,
 } from "react-icons/ai";
 import { FaUserCircle } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
@@ -26,6 +27,7 @@ const icons = {
   AiFillHeart,
   FcGoogle,
   BiLogOut,
+  AiFillCaretRight,
 };
 
 export default icons;
