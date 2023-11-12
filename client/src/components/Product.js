@@ -28,7 +28,7 @@ const Product = ({ productData, isNew, normal }) => {
           setIsShowOption(false);
         }}
       >
-        <div className="w-full relative">
+        <div className="w-full relative flex items-center justify-center">
           {isShowOption && (
             <div className="absolute bottom-[-10px] left-0 right-0 flex justify-center gap-4 animate-slide-top">
               <SelectOption icon={<AiFillHeart />} />
@@ -50,7 +50,7 @@ const Product = ({ productData, isNew, normal }) => {
               alt=""
               className={
                 isNew
-                  ? "absolute top-[-1px] left-[185px] w-[70px] "
+                  ? "absolute top-[-1px] left-[185px] w-[70px]"
                   : "absolute top-[-1px] left-[185px] w-[100px] h-[35px] object-cover"
               }
             />

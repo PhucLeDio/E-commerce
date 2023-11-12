@@ -161,12 +161,12 @@ const Login = () => {
               </div>
               <div className="mb-4 flex gap-4">
                 <Button
-                  name="Submit"
+                  children="Submit"
                   handleOnClick={handleForgotPassword}
                   style={`w-full bg-red-500 text-white p-3 hover:bg-red-600 transition duration-300`}
                 />
                 <Button
-                  name="Cancel"
+                  children="Cancel"
                   style={`w-full bg-red-500 text-white p-3 hover:bg-red-600 transition duration-300`}
                   handleOnClick={() => {
                     setIsForgotPassword(false);
@@ -275,7 +275,7 @@ const Login = () => {
           */}
           <div className="w-full flex flex-col my-4">
             <Button
-              name={isRegister ? "Register" : "Login"}
+              children={isRegister ? "Register" : "Login"}
               style={
                 isRegister
                   ? `w-full text-[#060606] my-2 font-semibold bg-white border border-black rounded-md p-4 text-center flex items-center justify-center cursor-pointer`

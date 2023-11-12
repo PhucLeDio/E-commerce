@@ -6,7 +6,7 @@ const ProductExtraInfoItem = ({ icon, title, sub }) => {
       <span className="p-2 bg-gray-800 rounded-full flex items-center justify-center text-white">
         {icon}
       </span>
-      <div className="flex flex-col text-sm text-gray-500">
+      <div className="flex flex-col text-sm text-gray-500 p-1">
         <span className="font-medium">{title}</span>
         <span className="text-xs">{sub}</span>
       </div>

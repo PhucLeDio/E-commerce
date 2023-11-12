@@ -140,7 +140,7 @@ const DetailProduct = () => {
             <Button fw>Add to Cart</Button>
           </div>
         </div>
-        <div className="  w-1/5">
+        <div className="w-1/5">
           {productExtraInfomation.map((el) => (
             <ProductExtraInfoItem
               key={el.id}

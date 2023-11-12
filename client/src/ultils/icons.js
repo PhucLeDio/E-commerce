@@ -9,6 +9,7 @@ import {
   AiOutlineMenu,
   AiFillHeart,
   AiFillCaretRight,
+  AiFillCaretDown,
 } from "react-icons/ai";
 import { FaUserCircle } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
@@ -36,6 +37,7 @@ const icons = {
   PiGiftDuotone,
   BsReplyFill,
   FaTty,
+  AiFillCaretDown,
 };
 
 export default icons;

@@ -33,32 +33,32 @@ const { BsShieldShaded, FaTruckFast, PiGiftDuotone, BsReplyFill, FaTty } =
 export const productExtraInfomation = [
   {
     id: 1,
-    title: "",
-    sub: "Quality Checked",
+    title: "Guarantee",
+    sub: "Quality checked",
     icon: <BsShieldShaded />,
   },
   {
     id: 2,
-    title: "",
-    sub: "Quality Checked",
+    title: "Free shipping",
+    sub: "Free on all products",
     icon: <FaTruckFast />,
   },
   {
     id: 3,
-    title: "",
-    sub: "Quality Checked",
+    title: "Special gift card",
+    sub: "Special gift card",
     icon: <PiGiftDuotone />,
   },
   {
     id: 4,
-    title: "",
-    sub: "Quality Checked",
+    title: "Free return",
+    sub: "Within 7 days",
     icon: <BsReplyFill />,
   },
   {
     id: 5,
-    title: "",
-    sub: "Quality Checked",
+    title: "Consultancy",
+    sub: "Lifetime 24/7/356",
     icon: <FaTty />,
   },
 ];
@@ -66,16 +66,7 @@ export const productInfoTabs = [
   {
     id: 1,
     name: "DISCRIPTION",
-    content: `Technology: GSM / HSPA / LTE
-    Dimensions: 153.8 x 75.5 x 7.6 mm
-    Weight: 154 g
-    Display: IPS LCD 5.5 inches
-    Resolution: 720 x 1280
-    OS: Android OS, v6.0 (Marshmallow)
-    Chipset: Octa-core
-    CPU: Octa-core
-    Internal: 32 GB, 4 GB RAM
-    Camera: 13MB - 20 MP`,
+    content: `Raise your game and carry your squad with the new ROG Strix G16, a powerful gaming laptop that features Windows 11, a 13th Gen Intel Core processor, and an NVIDIA GeForce RTX 40 Series Laptop GPU. With DDR5-4800MHz memory and PCIe 4x4, this laptop is designed to provide lightning-fast performance and minimize loading times. The ROG Intelligent Cooling system with upgraded liquid metal on the CPU and Tri-Fan Technology, ensures that the laptop can handle the power it can deliver. The ROG Nebula Display guarantees a premium visual experience, and the MUX Switch with Advanced Optimus optimizes both gaming performance and battery life. The laptop's design is inspired by cyberpunk aesthetics and graffiti accents, and features unique elements such as a dot matrix design on the lid and cross-hatched vents.`,
   },
   {
     id: 2,

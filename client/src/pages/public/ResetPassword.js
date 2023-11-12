@@ -38,7 +38,7 @@ const ResetPassword = () => {
           </div>
           <div className="mb-4 flex gap-4">
             <Button
-              name="Submit"
+              children="Submit"
               handleOnClick={handleResetPassword}
               style={`w-full bg-red-500 text-white p-3 hover:bg-red-600 transition duration-300`}
             />
