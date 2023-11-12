@@ -13,6 +13,9 @@ import {
 import { FaUserCircle } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { BiLogOut } from "react-icons/bi";
+import { BsShieldShaded, BsReplyFill } from "react-icons/bs";
+import { FaTruckFast, FaTty } from "react-icons/fa6";
+import { PiGiftDuotone } from "react-icons/pi";
 
 const icons = {
   RiPhoneFill,
@@ -28,6 +31,11 @@ const icons = {
   FcGoogle,
   BiLogOut,
   AiFillCaretRight,
+  BsShieldShaded,
+  FaTruckFast,
+  PiGiftDuotone,
+  BsReplyFill,
+  FaTty,
 };
 
 export default icons;

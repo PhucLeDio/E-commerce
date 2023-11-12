@@ -38,7 +38,9 @@ const getProducts = asyncHandler(async (req, res) => {
 
   // filering
   if (queries?.title)
-    formatedQueries.title = { $regex: queries.title, $options: "i" };
+    formatedQueries.title = { $regex: queries.title, $option: "i" };
+  if (queries?.category)
+    formatedQueries.category = { $regex: queries.category, $options: "i" };
   let queryCommand = Product.find(formatedQueries);
 
   // sorting

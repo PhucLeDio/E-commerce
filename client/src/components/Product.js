@@ -10,7 +10,7 @@ import path from "../ultils/path";
 
 const { AiFillEye, AiOutlineMenu, AiFillHeart } = icons;
 
-const Product = ({ productData, isNew }) => {
+const Product = ({ productData, isNew, normal }) => {
   const [isShowOption, setIsShowOption] = useState(false);
   return (
     <div className="w-full text-base px-[10px]">
@@ -44,15 +44,17 @@ const Product = ({ productData, isNew }) => {
             alt=""
             className="w-[274.4px] h-[280px] object-cover"
           />
-          <img
-            src={isNew ? label : newlabel}
-            alt=""
-            className={
-              isNew
-                ? "absolute top-[-1px] left-[185px] w-[70px] "
-                : "absolute top-[-1px] left-[185px] w-[100px] h-[35px] object-cover"
-            }
-          />
+          {!normal && (
+            <img
+              src={isNew ? label : newlabel}
+              alt=""
+              className={
+                isNew
+                  ? "absolute top-[-1px] left-[185px] w-[70px] "
+                  : "absolute top-[-1px] left-[185px] w-[100px] h-[35px] object-cover"
+              }
+            />
+          )}
         </div>
         <div className="flex flex-col mt-[15px] items-start gap-1 w-full">
           <span className="line-clamp-1">{productData?.title}</span>

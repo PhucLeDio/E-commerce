@@ -12,7 +12,7 @@ const settings = {
   autoplaySpeed: 3000,
 };
 
-const CustomSlider = ({ products, activedTab }) => {
+const CustomSlider = ({ products, activedTab, normal }) => {
   return (
     <>
       {products && (
@@ -23,6 +23,7 @@ const CustomSlider = ({ products, activedTab }) => {
               pid={el.id}
               productData={el}
               isNew={activedTab === 1 ? true : false}
+              normal={normal}
             />
           ))}
         </Slider>
