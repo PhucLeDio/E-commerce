@@ -28,8 +28,10 @@ export const navigation = [
     path: `/${path.FAQ}`,
   },
 ];
+
 const { BsShieldShaded, FaTruckFast, PiGiftDuotone, BsReplyFill, FaTty } =
   icons;
+
 export const productExtraInfomation = [
   {
     id: 1,
@@ -62,6 +64,7 @@ export const productExtraInfomation = [
     icon: <FaTty />,
   },
 ];
+
 export const productInfoTabs = [
   {
     id: 1,
@@ -99,4 +102,17 @@ export const productInfoTabs = [
     id: 5,
     name: "CUSTOMER REVIEW",
   },
+];
+
+export const colors = [
+  "black",
+  "brown",
+  "gray",
+  "white",
+  "pink",
+  "yellow",
+  "orange",
+  "purple",
+  "green",
+  "blue",
 ];

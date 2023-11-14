@@ -6,7 +6,6 @@ import { renderStarFromNumber } from "../ultils/helpers";
 import { SelectOption } from "./index";
 import icons from "../ultils/icons";
 import { Link } from "react-router-dom";
-import path from "../ultils/path";
 
 const { AiFillEye, AiOutlineMenu, AiFillHeart } = icons;
 
