@@ -2,6 +2,7 @@ import React, { memo, useEffect, useState } from "react";
 import icons from "../ultils/icons";
 import { colors } from "../ultils/contants";
 import { createSearchParams, useNavigate, useParams } from "react-router-dom";
+import { apiGetProducts } from "../apis";
 
 const { AiFillCaretDown } = icons;
 
@@ -14,6 +15,8 @@ const SearchItem = ({
   const navigate = useNavigate();
   const { category } = useParams();
   const [selected, setSelected] = useState([]);
+  const [price, setPrice] = useState([0, 0]);
+  const [bestPrice, setBestPrice] = useState(null);
 
   const handleSelect = (e) => {
     const alreadyEl = selected.find((el) => el === e.target.value);
@@ -25,14 +28,42 @@ const SearchItem = ({
     changeActiveFilter(null);
   };
 
+  const fetchBestPriceProfuct = async () => {
+    const response = await apiGetProducts({ sort: "price", limit: 1 });
+    if (response.success) setBestPrice(response.products[0].price);
+  };
+
   useEffect(() => {
-    navigate({
-      pathname: `/${category}`,
-      search: createSearchParams({
-        color: selected,
-      }).toString(),
-    });
+    if (selected.length > 0) {
+      navigate({
+        pathname: `/${category}`,
+        search: createSearchParams({
+          color: selected.join(","),
+        }).toString(),
+      });
+    } else {
+      navigate(`/${category}`);
+    }
   }, [selected]);
+
+  useEffect(() => {
+    if (type === "input") fetchBestPriceProfuct();
+  }, [type]);
+
+  useEffect(() => {
+    console.log(price);
+
+    // const validPrice = price.filter((el) => +el > 0);
+
+    // if (price.from > 0) {
+    //   navigate({
+    //     pathname: `/${category}`,
+    //     search: createSearchParams(price).toString(),
+    //   });
+    // } else {
+    //   navigate(`/${category}`);
+    // }
+  }, [price]);
 
   return (
     <div
@@ -79,6 +110,59 @@ const SearchItem = ({
                     </label>
                   </div>
                 ))}
+              </div>
+            </div>
+          )}
+          {type === "input" && (
+            <div onClick={(e) => e.stopPropagation()}>
+              <div className="p-4 flex items-center justify-between gap-8 border-b">
+                <span className="whitespace-nowrap">{`Default input value is USD, best price: ${Number(
+                  bestPrice
+                ).toLocaleString()}`}</span>
+                <span
+                  onClick={(el) => {
+                    el.stopPropagation();
+                    setSelected([]);
+                  }}
+                  className="underline cursor-pointer hover:text-main"
+                >
+                  Reset
+                </span>
+              </div>
+
+              <div className="flex items-center p-2 gap-2">
+                <div className="flex items-center gap-2">
+                  <label htmlFor="from">From</label>
+                  <input
+                    className="form-input"
+                    type="number"
+                    id="from"
+                    value={price[0]}
+                    onChange={(e) =>
+                      setPrice((prev) =>
+                        prev.map((el, index) =>
+                          index === 0 ? e.target.value : el
+                        )
+                      )
+                    }
+                  />
+                </div>
+                <div className="flex items-center gap-2">
+                  <label htmlFor="from">To</label>
+                  <input
+                    className="form-input"
+                    type="number"
+                    id="to"
+                    value={price[1]}
+                    onChange={(e) =>
+                      setPrice((prev) =>
+                        prev.map((el, index) =>
+                          index === 1 ? e.target.value : el
+                        )
+                      )
+                    }
+                  />
+                </div>
               </div>
             </div>
           )}
