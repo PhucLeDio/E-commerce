@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
-import { Breadcrumb, Product, SearchItem } from "../../components";
+import { Breadcrumb, Product, SearchItem, Pagination } from "../../components";
 import { apiGetProducts } from "../../apis";
 import Masonry from "react-masonry-css";
 
@@ -76,6 +76,9 @@ const Products = () => {
             <Product key={el._id} pid={el.id} productData={el} normal={true} />
           ))}
         </Masonry>
+      </div>
+      <div className="w-main m-auto my-4 flex justify-end">
+        <Pagination />
       </div>
       <div className="w-full h-[500px]"></div>
     </div>

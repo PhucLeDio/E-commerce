@@ -19,3 +19,5 @@ export { default as SelectQuantity } from "./SelectQuantity";
 export { default as ProductExtraInfoItem } from "./ProductExtraInfoItem";
 export { default as ProductInfomation } from "./ProductInfomation";
 export { default as SearchItem } from "./SearchItem";
+export { default as Pagination } from "./Pagination";
+export { default as PagiItem } from "./PagiItem";

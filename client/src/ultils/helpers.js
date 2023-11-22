@@ -48,34 +48,11 @@ export const validate = (payload, setInvalidFields) => {
     }
   }
 
-  // for (let arr of formatPayload) {
-  //   switch (arr[0]) {
-  //     case "email":
-  //       const regex =
-  //         /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-  //       if (!arr[1].match(regex)) {
-  //         invalids++;
-  //         setInvalidFields((prev) => [
-  //           ...prev,
-  //           { name: arr[0], mes: "Email invalid." },
-  //         ]);
-  //       }
-  //       break;
-
-  //     case "password":
-  //       if (arr[1].length < 6) {
-  //         invalids++;
-  //         setInvalidFields((prev) => [
-  //           ...prev,
-  //           { name: arr[0], mes: "Min = 6." },
-  //         ]);
-  //       }
-  //       break;
-
-  //     default:
-  //       break;
-  //   }
-  // }
   return invalids;
 };
 export const fotmatPrice = (number) => Math.round(number / 1000) * 1000;
+
+export const generateRange = (start, end) => {
+  const length = end + 1 - start;
+  return Array.from({ length }, (_, index) => start + index);
+};
