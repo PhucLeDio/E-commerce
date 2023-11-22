@@ -21,3 +21,4 @@ export { default as ProductInfomation } from "./ProductInfomation";
 export { default as SearchItem } from "./SearchItem";
 export { default as Pagination } from "./Pagination";
 export { default as PagiItem } from "./PagiItem";
+export { default as Loading } from "./Loading";
