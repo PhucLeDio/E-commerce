@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, memo } from "react";
 import logo from "../assets/logo.png";
 import icons from "../ultils/icons";
 import { Link } from "react-router-dom";
@@ -56,4 +56,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default memo(Header);

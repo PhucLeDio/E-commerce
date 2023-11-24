@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 
 const inputField = ({
   value,
@@ -37,4 +37,4 @@ const inputField = ({
 
 // [{name: password, mes: required}]
 
-export default inputField;
+export default memo(inputField);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import usePagination from "../hooks/usePagination";
 import { PagiItem } from "./";
 
@@ -13,4 +13,4 @@ const Pagination = ({ totalCount }) => {
   );
 };
 
-export default Pagination;
+export default memo(Pagination);

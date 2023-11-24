@@ -22,3 +22,6 @@ export { default as SearchItem } from "./SearchItem";
 export { default as Pagination } from "./Pagination";
 export { default as PagiItem } from "./PagiItem";
 export { default as Loading } from "./Loading";
+export { default as Votebar } from "./Votebar";
+export { default as VoteOption } from "./VoteOption";
+export { default as AdminBar } from "./AdminBar";

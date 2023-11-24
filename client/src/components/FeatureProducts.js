@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import { ProductCard } from "./index";
 import { apiGetProducts } from "../apis";
 
@@ -58,4 +58,4 @@ const FeatureProducts = () => {
   );
 };
 
-export default FeatureProducts;
+export default memo(FeatureProducts);

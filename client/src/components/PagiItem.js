@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import clsx from "clsx";
 
 const PagiItem = ({ children }) => {
@@ -15,4 +15,4 @@ const PagiItem = ({ children }) => {
   );
 };
 
-export default PagiItem;
+export default memo(PagiItem);
