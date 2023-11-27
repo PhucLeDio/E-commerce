@@ -160,7 +160,9 @@ export const adminSideBar = [
     text: "Manage orders",
     path: `${path.MANAGE_ORDER}`,
     icon: <FaCashRegister size={20} />,
-    
+  },
+];
+
 export const sorts = [
   {
     id: 1,
