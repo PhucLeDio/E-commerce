@@ -3,7 +3,7 @@ import icons from "../ultils/icons";
 import { colors } from "../ultils/contants";
 import { createSearchParams, useNavigate, useParams } from "react-router-dom";
 import { apiGetProducts } from "../apis";
-
+import useDebounce from "../hooks/useDebounce";
 const { AiFillCaretDown } = icons;
 
 const SearchItem = ({
@@ -15,7 +15,10 @@ const SearchItem = ({
   const navigate = useNavigate();
   const { category } = useParams();
   const [selected, setSelected] = useState([]);
-  const [price, setPrice] = useState([0, 0]);
+  const [price, setPrice] = useState({
+    from: "",
+    to: "",
+  });
   const [bestPrice, setBestPrice] = useState(null);
 
   const handleSelect = (e) => {
@@ -51,19 +54,20 @@ const SearchItem = ({
   }, [type]);
 
   useEffect(() => {
-    console.log(price);
-
-    // const validPrice = price.filter((el) => +el > 0);
-
-    // if (price.from > 0) {
-    //   navigate({
-    //     pathname: `/${category}`,
-    //     search: createSearchParams(price).toString(),
-    //   });
-    // } else {
-    //   navigate(`/${category}`);
-    // }
+    if (price.from > price.to) alert("To price cannot greater than to price");
   }, [price]);
+  const debouncePriceFrom = useDebounce(price.from, 500);
+  const debouncePriceTo = useDebounce(price.to, 500);
+  useEffect(() => {
+    const data = {};
+    if (Number(price.from) > 0) data.from = price.from;
+    if (Number(price.to) > 0) data.to = price.to;
+
+    navigate({
+      pathname: `/${category}`,
+      search: createSearchParams(data).toString(),
+    });
+  }, [debouncePriceFrom, debouncePriceTo]);
 
   return (
     <div
@@ -122,7 +126,8 @@ const SearchItem = ({
                 <span
                   onClick={(el) => {
                     el.stopPropagation();
-                    setSelected([]);
+                    setPrice({ from: "", to: "" });
+                    changeActiveFilter(null);
                   }}
                   className="underline cursor-pointer hover:text-main"
                 >
@@ -137,13 +142,9 @@ const SearchItem = ({
                     className="form-input"
                     type="number"
                     id="from"
-                    value={price[0]}
+                    value={price.from}
                     onChange={(e) =>
-                      setPrice((prev) =>
-                        prev.map((el, index) =>
-                          index === 0 ? e.target.value : el
-                        )
-                      )
+                      setPrice((prev) => ({ ...prev, from: e.target.value }))
                     }
                   />
                 </div>
@@ -153,13 +154,9 @@ const SearchItem = ({
                     className="form-input"
                     type="number"
                     id="to"
-                    value={price[1]}
+                    value={price.to}
                     onChange={(e) =>
-                      setPrice((prev) =>
-                        prev.map((el, index) =>
-                          index === 1 ? e.target.value : el
-                        )
-                      )
+                      setPrice((prev) => ({ ...prev, to: e.target.value }))
                     }
                   />
                 </div>
