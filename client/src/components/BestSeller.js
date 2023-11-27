@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { apiGetProducts } from "../apis/product";
 import { CustomSlider } from "./";
 import { getNewProducts } from "../store/products/asynsAction";
@@ -68,4 +68,4 @@ const BestSeller = () => {
   );
 };
 
-export default BestSeller;
+export default memo(BestSeller);

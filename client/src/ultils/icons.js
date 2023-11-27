@@ -1,5 +1,5 @@
 import { RiPhoneFill } from "react-icons/ri";
-import { MdEmail } from "react-icons/md";
+import { MdEmail, MdGroup } from "react-icons/md";
 import {
   AiOutlineShoppingCart,
   AiFillHome,
@@ -10,13 +10,15 @@ import {
   AiFillHeart,
   AiFillCaretRight,
   AiFillCaretDown,
+  AiOutlineDashboard,
 } from "react-icons/ai";
-import { FaUserCircle } from "react-icons/fa";
+import { FaUserCircle, FaCashRegister, FaCaretRight } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { BiLogOut } from "react-icons/bi";
+import { BiLogOut, BiDotsHorizontalRounded } from "react-icons/bi";
 import { BsShieldShaded, BsReplyFill } from "react-icons/bs";
 import { FaTruckFast, FaTty } from "react-icons/fa6";
 import { PiGiftDuotone } from "react-icons/pi";
+import { GrTechnology } from "react-icons/gr";
 
 const icons = {
   RiPhoneFill,
@@ -38,6 +40,12 @@ const icons = {
   BsReplyFill,
   FaTty,
   AiFillCaretDown,
+  BiDotsHorizontalRounded,
+  AiOutlineDashboard,
+  MdGroup,
+  GrTechnology,
+  FaCashRegister,
+  FaCaretRight,
 };
 
 export default icons;

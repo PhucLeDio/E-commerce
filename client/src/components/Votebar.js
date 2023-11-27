@@ -1,3 +1,4 @@
+
 import React, { useRef, useEffect } from "react";
 import { AiFillStar } from "react-icons/ai";
 
@@ -25,3 +26,4 @@ const Votebar = ({ number, ratingCount, ratingTotal }) => {
   );
 };
 export default Votebar;
+

@@ -1,6 +1,19 @@
 // import { icons } from "react-icons/lib";
 import path from "./path";
 import icons from "./icons";
+
+const {
+  BsShieldShaded,
+  FaTruckFast,
+  PiGiftDuotone,
+  BsReplyFill,
+  FaTty,
+  AiOutlineDashboard,
+  MdGroup,
+  GrTechnology,
+  FaCashRegister,
+} = icons;
+
 export const navigation = [
   {
     id: 1,
@@ -28,9 +41,6 @@ export const navigation = [
     path: `/${path.FAQ}`,
   },
 ];
-
-const { BsShieldShaded, FaTruckFast, PiGiftDuotone, BsReplyFill, FaTty } =
-  icons;
 
 export const productExtraInfomation = [
   {
@@ -112,6 +122,45 @@ export const colors = [
   "green",
   "blue",
 ];
+
+export const adminSideBar = [
+  {
+    id: 1,
+    type: "SINGLE",
+    text: "Dashboard",
+    path: `${path.DASHBOARD}`,
+    icon: <AiOutlineDashboard size={20} />,
+  },
+  {
+    id: 2,
+    type: "SINGLE",
+    text: "Manage User",
+    path: `${path.MANAGE_USER}`,
+    icon: <MdGroup size={20} />,
+  },
+  {
+    id: 3,
+    type: "PARENT",
+    text: "Manage Products",
+    icon: <GrTechnology size={20} />,
+    submenu: [
+      {
+        text: "Create product",
+        path: `${path.CREATE_PRODUCTS}`,
+      },
+      {
+        text: "Manage product",
+        path: `${path.MANAGE_PRODUCTS}`,
+      },
+    ],
+  },
+  {
+    id: 4,
+    type: "SINGLE",
+    text: "Manage orders",
+    path: `${path.MANAGE_ORDER}`,
+    icon: <FaCashRegister size={20} />,
+    
 export const sorts = [
   {
     id: 1,
@@ -149,6 +198,7 @@ export const sorts = [
     text: "Date, old to new",
   },
 ];
+
 export const voteOptions = [
   {
     id: 1,

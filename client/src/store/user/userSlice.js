@@ -17,7 +17,11 @@ export const userSlice = createSlice({
     logout: (state, action) => {
       state.isLoggedIn = false;
       state.token = null;
+      state.current = null;
     },
+    // clearMessage: (state) => {
+    //   state.mes = "";
+    // },
   },
   extraReducers: (builder) => {
     builder.addCase(actions.getCurrent.pending, (state, action) => {
@@ -27,11 +31,15 @@ export const userSlice = createSlice({
     builder.addCase(actions.getCurrent.fulfilled, (state, action) => {
       state.isLoading = false;
       state.current = action.payload;
+      // state.isLoggedIn = true;
     });
 
     builder.addCase(actions.getCurrent.rejected, (state, action) => {
       state.isLoading = false;
       state.current = null;
+      state.isLoggedIn = false;
+      // state.token = null;
+      // state.mes = "Run out of time. Login again!";
     });
   },
 });

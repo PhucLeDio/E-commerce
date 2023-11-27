@@ -5,7 +5,7 @@ import {
   useNavigate,
   createSearchParams,
 } from "react-router-dom";
-import { Breadcrumb, Product, SearchItem, InputSelect } from "../../components";
+import { Breadcrumb, Product, SearchItem, InputSelect, Pagination } from "../../components";
 import { apiGetProducts } from "../../apis";
 import Masonry from "react-masonry-css";
 import { sorts } from "../../ultils/contants";
@@ -125,6 +125,9 @@ const Products = () => {
             <Product key={el._id} pid={el.id} productData={el} normal={true} />
           ))}
         </Masonry>
+      </div>
+      <div className="w-main m-auto my-4 flex justify-end">
+        <Pagination />
       </div>
       <div className="w-full h-[500px]"></div>
     </div>

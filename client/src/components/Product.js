@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { formatMoney } from "../ultils/helpers";
 import label from "../assets/trending.png";
 import newlabel from "../assets/new.png";
@@ -71,4 +71,4 @@ const Product = ({ productData, isNew, normal }) => {
   );
 };
 
-export default Product;
+export default memo(Product);
