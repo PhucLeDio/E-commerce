@@ -17,6 +17,8 @@ import {
   renderStarFromNumber,
 } from "../../ultils/helpers";
 import { productExtraInfomation } from "../../ultils/contants";
+import { current } from "@reduxjs/toolkit";
+
 const settings = {
   dots: false,
   infinite: true,
@@ -30,11 +32,16 @@ const settings = {
 const DetailProduct = () => {
   const { pid, title, category } = useParams();
   const [product, setProduct] = useState(null);
+  const [currentImage, setCurrentImage] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [relatedProducts, setRelatedProducts] = useState(null);
+  const [update, setUpdate] = useState(false);
   const fetchProductData = async () => {
     const response = await apiGetProduct(pid);
-    if (response.success) setProduct(response.productData);
+    if (response.success) {
+      setProduct(response.productData);
+      setCurrentImage(response.productData?.thumb);
+    }
   };
   const fetchProducts = async () => {
     const response = await apiGetProducts({ category });
@@ -45,7 +52,14 @@ const DetailProduct = () => {
       fetchProductData();
       fetchProducts();
     }
+    window.scrollTo(0, 0);
   }, [pid]);
+  useEffect(() => {
+    if (pid) fetchProductData();
+  }, [update]);
+  const rerender = useCallback(() => {
+    setUpdate(!update);
+  }, [update]);
 
   const handleQuantity = useCallback(
     (number) => {
@@ -65,7 +79,9 @@ const DetailProduct = () => {
     },
     [quantity]
   );
-
+  const handleClinkImage = (e, el) => (
+    e.stopPropagation(), setCurrentImage(el)
+  );
   return (
     <div className="w-full">
       <div className="h-[81px] flex justify-center items-center bg-gray-100">
@@ -82,10 +98,10 @@ const DetailProduct = () => {
                 smallImage: {
                   alt: "Wristwatch by Ted Baker London",
                   isFluidWidth: true,
-                  src: product?.thumb,
+                  src: currentImage,
                 },
                 largeImage: {
-                  src: product?.thumb,
+                  src: currentImage,
                   width: 1800,
                   height: 1800,
                 },
@@ -97,9 +113,10 @@ const DetailProduct = () => {
               {product?.images?.map((el) => (
                 <div className="px-1" key={el}>
                   <img
+                    onClick={(e) => handleClinkImage(e, el)}
                     src={el}
                     alt="sub-product"
-                    className="h-[143px] w-[143px] object-cover border"
+                    className="h-[143px] w-[143px]  object-cover border"
                   />
                 </div>
               ))}
@@ -111,14 +128,14 @@ const DetailProduct = () => {
             <h2 className="text-[30px] font-semibold">{`${formatMoney(
               fotmatPrice(product?.price)
             )} VND`}</h2>
-            <span className="text-sm text-main">{`Kho: ${product?.quantity}`}</span>
+            <span className="text-sm text-main">{`In stock: ${product?.quantity}`}</span>
           </div>
           <div className="flex items-center gap-1">
             {renderStarFromNumber(product?.totalRatings)?.map((el, index) => (
               <span key={index}>{el}</span>
             ))}
             <span className="text-sm text-main italic">
-              {`(Đã bán: ${product?.sold} cái)`}{" "}
+              {`(Sold: ${product?.sold} pieces)`}{" "}
             </span>
           </div>
           <ul className=" list-disc text-sm text-gray-500 pl-4">
@@ -152,7 +169,13 @@ const DetailProduct = () => {
         </div>
       </div>
       <div className="w-main m-auto mt-8">
-        <ProductInfomation />
+        <ProductInfomation
+          totalRatings={product?.totalRatings}
+          ratings={product?.ratings}
+          nameProduct={product?.title}
+          pid={product?._id}
+          rerender={rerender}
+        />
       </div>
       <div className="w-main m-auto mt-8">
         <h3 className="text-[20px] font-semibold py-[15px] border-b-2 border-main">

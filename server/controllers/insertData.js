@@ -3,6 +3,8 @@ const asyncHandler = require("express-async-handler");
 const slugify = require("slugify");
 const categoryData = require("../../data/cate_brand");
 const productCategory = require("../models/productCategory");
+const { request } = require("express");
+const product = require("../models/product");
 
 const fn2 = async (cate) => {
   await productCategory.create({

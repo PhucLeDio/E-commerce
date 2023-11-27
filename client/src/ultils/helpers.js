@@ -18,6 +18,7 @@ export const renderStarFromNumber = (number, size) => {
   // 4 = [1, 1, 1, 1, 0]
   // 2 = [1, 1, 0, 0, 0]
   const stars = [];
+  number = Math.round(number);
   for (let i = 0; i < +number; i++) {
     stars.push(<AiFillStar color="#f1b400" size={size || 16} />);
   }

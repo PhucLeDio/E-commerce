@@ -108,10 +108,6 @@ export const productInfoTabs = [
     Customers are able to pick the next ovoloble delivery day that best fits their schedule. However, to foute stops os efficiently as possible, Shopity shop will provide the time frame Customers will not be able to choose a time. You will be notified in advance of your scheduled time frame. Please make sure that a responsible years or older) wit be home at that time. in proporation for your delivery, please remove existing fumiture pictures, mirrors, accessories, etc. to prevent comages, Also insure that the area where you would like your furniture placed is clear of any old furniture and any other items that may obstruct the passageway of the delivery team shopity Shop will deliver
     adult (18 assemble, and set up your new furniture purchase and remove a pocking materials from your home. Our delivery crews are not permitted to move your existing furniture or other household items Delivery personnel will attempt to deliver the purchased items in a safe and controlled manner but will not attempt to place furniture if they feel it will result in damage to the product or your home. Delivery personnel ore unable to remove doors, hoist furniture or carry furniture up more than 3 tight of stairs. An elevator must be available for deliveries to the 4th floor and above`,
   },
-  {
-    id: 5,
-    name: "CUSTOMER REVIEW",
-  },
 ];
 
 export const colors = [
@@ -164,5 +160,64 @@ export const adminSideBar = [
     text: "Manage orders",
     path: `${path.MANAGE_ORDER}`,
     icon: <FaCashRegister size={20} />,
+    
+export const sorts = [
+  {
+    id: 1,
+    value: "-sold",
+    text: "Best selling",
+  },
+  {
+    id: 2,
+    value: "-title",
+    text: "Alphabetically, A-Z",
+  },
+  {
+    id: 3,
+    value: "tile",
+    text: "Alphabetically, Z-A",
+  },
+  {
+    id: 4,
+    value: "-price",
+    text: "Price, high to low",
+  },
+  {
+    id: 5,
+    value: "price",
+    text: "Price, low to high",
+  },
+  {
+    id: 6,
+    value: "-createdAt",
+    text: "Date, new to old",
+  },
+  {
+    id: 7,
+    value: "createdAt",
+    text: "Date, old to new",
+  },
+];
+
+export const voteOptions = [
+  {
+    id: 1,
+    text: "Terrible",
+  },
+  {
+    id: 2,
+    text: "Bad",
+  },
+  {
+    id: 3,
+    text: "Neutral",
+  },
+  {
+    id: 4,
+    text: "Good",
+  },
+  {
+    id: 5,
+    text: "Perfect",
   },
 ];
