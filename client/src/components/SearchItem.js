@@ -1,7 +1,12 @@
 import React, { memo, useEffect, useState } from "react";
 import icons from "../ultils/icons";
 import { colors } from "../ultils/contants";
-import { createSearchParams, useNavigate, useParams } from "react-router-dom";
+import {
+  createSearchParams,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { apiGetProducts } from "../apis";
 import useDebounce from "../hooks/useDebounce";
 const { AiFillCaretDown } = icons;
@@ -15,6 +20,7 @@ const SearchItem = ({
   const navigate = useNavigate();
   const { category } = useParams();
   const [selected, setSelected] = useState([]);
+  const [params] = useSearchParams();
   const [price, setPrice] = useState({
     from: "",
     to: "",
@@ -38,10 +44,15 @@ const SearchItem = ({
 
   useEffect(() => {
     if (selected.length > 0) {
+      let param = [];
+      for (let i of params.entries()) param.push(i);
+      const queries = {};
+      for (let i of param) queries[i[0]] = i[1];
       navigate({
         pathname: `/${category}`,
         search: createSearchParams({
           color: selected.join(","),
+          page: 1,
         }).toString(),
       });
     } else {
@@ -54,7 +65,8 @@ const SearchItem = ({
   }, [type]);
 
   useEffect(() => {
-    if (price.from > price.to) alert("To price cannot greater than to price");
+    if (price.from && price.to && price.from > price.to)
+      alert("To price cannot greater than to price");
   }, [price]);
   const debouncePriceFrom = useDebounce(price.from, 500);
   const debouncePriceTo = useDebounce(price.to, 500);
@@ -102,7 +114,7 @@ const SearchItem = ({
                     <input
                       type="checkbox"
                       value={el}
-                      onClick={handleSelect}
+                      onChange={(e) => handleSelect(e, el)} // Add onChange handler
                       id={el}
                       checked={selected.some(
                         (selectedItem) => selectedItem === el
