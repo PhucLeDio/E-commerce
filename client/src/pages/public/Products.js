@@ -5,7 +5,13 @@ import {
   useNavigate,
   createSearchParams,
 } from "react-router-dom";
-import { Breadcrumb, Product, SearchItem, InputSelect, Pagination } from "../../components";
+import {
+  Breadcrumb,
+  Product,
+  SearchItem,
+  InputSelect,
+  Pagination,
+} from "../../components";
 import { apiGetProducts } from "../../apis";
 import Masonry from "react-masonry-css";
 import { sorts } from "../../ultils/contants";
@@ -26,7 +32,7 @@ const Products = () => {
 
   const fetcheProductsByCategory = async (queries) => {
     const response = await apiGetProducts(queries);
-    if (response.success) setProducts(response.products);
+    if (response.success) setProducts(response);
   };
 
   const { category } = useParams();
@@ -57,6 +63,7 @@ const Products = () => {
     const q = { ...priceQuery, ...queries };
     console.log(q);
     fetcheProductsByCategory(q);
+    window.scrollTo(0, 0);
   }, [params]);
 
   const changeActiveFilter = useCallback(
@@ -66,6 +73,7 @@ const Products = () => {
     },
     [activeClick]
   );
+
   const changeValue = useCallback(
     (value) => {
       setSort(value);
@@ -74,10 +82,12 @@ const Products = () => {
   );
 
   useEffect(() => {
-    navigate({
-      pathname: `/${category}`,
-      search: createSearchParams({ sort }).toString(),
-    });
+    if (sort) {
+      navigate({
+        pathname: `/${category}`,
+        search: createSearchParams({ sort }).toString(),
+      });
+    }
   }, [sort]);
   return (
     <div className="w-full">
@@ -121,13 +131,13 @@ const Products = () => {
           className="my-masonry-grid flex mx-[-10px]"
           columnClassName="my-masonry-grid_column"
         >
-          {products?.map((el, index) => (
+          {products?.products?.map((el, index) => (
             <Product key={el._id} pid={el.id} productData={el} normal={true} />
           ))}
         </Masonry>
       </div>
       <div className="w-main m-auto my-4 flex justify-end">
-        <Pagination />
+        <Pagination totalCount={products?.counts} />
       </div>
       <div className="w-full h-[500px]"></div>
     </div>
