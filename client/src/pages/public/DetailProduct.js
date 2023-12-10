@@ -17,7 +17,7 @@ import {
   renderStarFromNumber,
 } from "../../ultils/helpers";
 import { productExtraInfomation } from "../../ultils/contants";
-import { current } from "@reduxjs/toolkit";
+import DOMPurify from "dompurify";
 
 const settings = {
   dots: false,
@@ -116,7 +116,7 @@ const DetailProduct = () => {
                     onClick={(e) => handleClinkImage(e, el)}
                     src={el}
                     alt="sub-product"
-                    className="h-[143px] w-[143px]  object-cover border"
+                    className="h-[143px] w-[143px] object-cover border"
                   />
                 </div>
               ))}
@@ -128,7 +128,7 @@ const DetailProduct = () => {
             <h2 className="text-[30px] font-semibold">{`${formatMoney(
               fotmatPrice(product?.price)
             )} VND`}</h2>
-            <span className="text-sm text-main">{`In stock: ${product?.quantity}`}</span>
+            <span className="text-sm text-main">{`In stock: ${product?.quanlity}`}</span>
           </div>
           <div className="flex items-center gap-1">
             {renderStarFromNumber(product?.totalRatings)?.map((el, index) => (
@@ -139,11 +139,20 @@ const DetailProduct = () => {
             </span>
           </div>
           <ul className=" list-disc text-sm text-gray-500 pl-4">
-            {product?.description?.map((el) => (
-              <li className="leading-6" key={el}>
-                {el}
-              </li>
-            ))}
+            {product?.description?.length > 1 &&
+              product?.description?.map((el) => (
+                <li className="leading-6" key={el}>
+                  {el}
+                </li>
+              ))}
+            {product?.description?.length === 1 && (
+              <div
+                className="text-sm line-clamp-[10] mb-8"
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(product?.description[0]),
+                }}
+              ></div>
+            )}
           </ul>
           <div className="flex flex-col gap-8">
             <div className="flex items-center gap-4">

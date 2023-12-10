@@ -29,3 +29,6 @@ export { default as Ratings } from "./Ratings";
 export { default as Modal } from "./Modal";
 export { default as VoteOption } from "./VoteOption";
 export { default as Comment } from "./Comment";
+export { default as InputForm } from "./InputForm";
+export { default as Select } from "./Select";
+export { default as MarkdownEditor } from "./MarkdownEditor";

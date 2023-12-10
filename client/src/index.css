@@ -92,3 +92,7 @@ input {
 .my-masonry-grid_column > div {
   margin-bottom: 20px;
 }
+
+code {
+  white-space: inherit;
+}
