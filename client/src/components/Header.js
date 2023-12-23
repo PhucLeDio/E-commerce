@@ -1,5 +1,5 @@
 import React, { Fragment, memo } from "react";
-import logo from "../assets/logo.png";
+import logo from "../assets/logo2.jpg";
 import icons from "../ultils/icons";
 import { Link } from "react-router-dom";
 import path from "../ultils/path";
@@ -9,9 +9,13 @@ const { RiPhoneFill, MdEmail, AiOutlineShoppingCart, FaUserCircle } = icons;
 const Header = () => {
   const { current } = useSelector((state) => state.user);
   return (
-    <div className=" w-main flex justify-between h-[110px] py-[35px]">
+    <div className=" w-main flex justify-between h-[110px] py-[40px]">
       <Link to={`/${path.HOME}`}>
-        <img src={logo} alt="logo" className="w-[234px] object-contain" />
+        <img
+          src={logo}
+          alt="logo"
+          className="w-[290px] h-[80px] m-[-25px] pr-10 object-contain"
+        />
       </Link>
 
       <div className="flex text-[13px]">

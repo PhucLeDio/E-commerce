@@ -9,8 +9,8 @@ const Pagination = ({ totalCount }) => {
 
   const range = () => {
     const currentPage = +params.get("page");
-    const pageSize = +process.env.REACT_APP_PRODUCT_LIMIT || 10;
-    const start = (currentPage - 1) * pageSize + 1;
+    const pageSize = +process.env.REACT_APP_PRODUCT_LIMIT;
+    const start = Math.min((currentPage - 1) * pageSize + 1, totalCount);
     const end = Math.min(currentPage * pageSize, totalCount);
 
     return `${start} - ${end}`;
@@ -19,9 +19,7 @@ const Pagination = ({ totalCount }) => {
   return (
     <div className="flex w-main justify-between items-center">
       {!+params.get("page") && (
-        <span className="text-sm italic">{`Show products 1 - ${
-          process.env.REACT_APP_PRODUCT_LIMIT || 10
-        } of ${totalCount}`}</span>
+        <span className="text-sm italic">{`Show products 1 - ${process.env.REACT_APP_PRODUCT_LIMIT} of ${totalCount}`}</span>
       )}
       {+params.get("page") && (
         <span className="text-sm italic">{`Show products ${range()} of ${totalCount}`}</span>

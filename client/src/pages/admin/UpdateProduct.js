@@ -1,14 +1,13 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { FaUpload } from "react-icons/fa";
-import { InputForm, Select, Button, MarkdownEditor } from "../../components";
+import React, { memo, useCallback, useEffect, useState } from "react";
+import { Button, InputForm, MarkdownEditor, Select } from "../../components";
 import { useForm } from "react-hook-form";
+import { FaUpload } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { getBase64, validate } from "../../ultils/helpers";
 import { toast } from "react-toastify";
-import { ImBin } from "react-icons/im";
-import { apiCreateProduct } from "../../apis";
+import { apiUpdateProduct } from "../../apis";
 
-const CreateProducts = () => {
+const UpdateProduct = ({ editProduct, render, setEditProduct }) => {
   const { categories } = useSelector((state) => state.app);
 
   // const dispatch = useDispatch();
@@ -17,10 +16,14 @@ const CreateProducts = () => {
   const [payload, setPayload] = useState({
     description: "",
   });
+
+  const [isFocusDescription, setIsFocusDescription] = useState(false);
+
   const [preview, setPreview] = useState({
     thumb: null,
     images: [],
   });
+
   const [invalidFields, setInvalidFields] = useState([]);
 
   const {
@@ -36,7 +39,7 @@ const CreateProducts = () => {
     return doc.body.textContent || "";
   };
 
-  const handleCreateProduct = async (data) => {
+  const handleUpdateProduct = async (data) => {
     const invalids = validate(payload, setInvalidFields);
     if (invalids === 0) {
       if (data.description) {
@@ -44,25 +47,33 @@ const CreateProducts = () => {
       }
       if (data.category)
         data.category = categories?.find(
-          (el) => el._id === data.category
+          (el) => el.title === data.category
         )?.title;
       const finalPayload = { ...data, ...payload };
       const formData = new FormData();
       for (let i of Object.entries(finalPayload)) formData.append(i[0], i[1]);
-      if (finalPayload.thumb) formData.append("thumb", finalPayload.thumb[0]);
+      if (finalPayload.thumb)
+        formData.append(
+          "thumb",
+          finalPayload?.thumb?.length === 0
+            ? preview.thumb
+            : finalPayload.thumb[0]
+        );
       if (finalPayload.images) {
-        for (let image of finalPayload.images) formData.append("images", image);
+        const images =
+          finalPayload?.image?.length === 0
+            ? preview.images
+            : finalPayload.images;
+        for (let image of images) formData.append("images", image);
       }
       setIsLoading(true);
-      const response = await apiCreateProduct(formData);
+      console.log(editProduct._id);
+      const response = await apiUpdateProduct(formData, editProduct._id);
       setIsLoading(false);
       if (response.success) {
         toast.success(response.mes);
-        reset();
-        setPreview({
-          thumb: null,
-          images: [],
-        });
+        render();
+        setEditProduct(null);
       } else toast.error(response.mes);
     }
   };
@@ -74,12 +85,33 @@ const CreateProducts = () => {
     [payload]
   );
 
-  const [hoverElm, setHoverElm] = useState(null);
+  // const [hoverElm, setHoverElm] = useState(false);
 
   const handlePreviewThumb = async (file) => {
     const base64Thumb = await getBase64(file);
     setPreview((prev) => ({ ...prev, thumb: base64Thumb }));
   };
+
+  useEffect(() => {
+    reset({
+      title: editProduct?.title || "",
+      price: editProduct?.price || "",
+      quantity: editProduct?.quantity || "",
+      color: editProduct?.color || "",
+      category: editProduct?.category || "",
+      brand: editProduct?.brand?.toLowerCase() || "",
+    });
+    setPayload({
+      description:
+        typeof editProduct?.description === "object"
+          ? editProduct?.description?.join(", ")
+          : editProduct?.description,
+    });
+    setPreview({
+      thumb: editProduct?.thumb || "",
+      images: editProduct?.images || [],
+    });
+  }, [editProduct]);
 
   const handlePreviewImages = async (files) => {
     const imagesPreview = [];
@@ -89,19 +121,23 @@ const CreateProducts = () => {
         return;
       }
       const base64 = await getBase64(file);
-      imagesPreview.push({ name: file.name, path: base64 });
+      imagesPreview.push(base64);
     }
     if (imagesPreview.length > 0)
       setPreview((prev) => ({ ...prev, images: imagesPreview }));
   };
 
-  useEffect(() => {
-    handlePreviewThumb(watch("thumb")[0]);
-  }, [watch("thumb")]);
+  useEffect(() => {}, [isFocusDescription]);
 
   useEffect(() => {
-    handlePreviewImages(watch("images"));
-  }, [watch("images")]);
+    if (watch("thumb") instanceof FileList && watch("thumb").length > 0)
+      handlePreviewThumb(watch("thumb")[0]);
+  }, [watch("thumb"), isFocusDescription]);
+
+  useEffect(() => {
+    if (watch("images") instanceof FileList && watch("images").length > 0)
+      handlePreviewImages(watch("images"));
+  }, [watch("images"), isFocusDescription]);
 
   const handleRemoveImage = (name) => {
     if (preview.images?.some((el) => el.name === name))
@@ -112,12 +148,19 @@ const CreateProducts = () => {
   };
 
   return (
-    <div className="w-full">
-      <h1 className="h-[75px] flex justify-between items-center text-3xl font-bold px-4 border-b">
-        <span>Create New Product</span>
-      </h1>
+    <div className="w-full flex flex-col gap-4 relative">
+      <div className="h-[60px] w-full"></div>
+      <div className="p-4 border-b flex justify-between items-center right-0 left-[327px] fixed top-0">
+        <h1 className="text-3xl font-bold tracking-tight">Update products</h1>
+        <span
+          className="text-main hover:underline cursor-pointer"
+          onClick={() => setEditProduct(null)}
+        >
+          Cancel
+        </span>
+      </div>
       <div className="p-4">
-        <form onSubmit={handleSubmit(handleCreateProduct)}>
+        <form onSubmit={handleSubmit(handleUpdateProduct)}>
           <InputForm
             label="Name product"
             register={register}
@@ -139,13 +182,13 @@ const CreateProducts = () => {
               type="number"
             />
             <InputForm
-              label="quanlity"
+              label="quantity"
               register={register}
               errors={errors}
-              id="quanlity"
+              id="quantity"
               validate={{ required: "Need fill this field" }}
               style="flex-auto"
-              placeholder="Quanlity of new product"
+              placeholder="quantity of new product"
               type="number"
             />
             <InputForm
@@ -164,7 +207,7 @@ const CreateProducts = () => {
               label="Category"
               options={categories?.map((el, index) => ({
                 key: index,
-                code: el._id,
+                code: el.title,
                 value: el.title,
               }))}
               register={register}
@@ -177,8 +220,8 @@ const CreateProducts = () => {
             <Select
               label="Brand (optional)"
               options={categories
-                ?.find((el) => el._id === watch("category"))
-                ?.brand?.map((el) => ({ code: el, value: el }))}
+                ?.find((el) => el.title === watch("category"))
+                ?.brand?.map((el) => ({ code: el.toLowerCase(), value: el }))}
               register={register}
               id="brand"
               style="flex-auto"
@@ -190,10 +233,11 @@ const CreateProducts = () => {
           <MarkdownEditor
             name="description"
             changeValue={changeValue}
-            value="Description"
+            value={payload.description}
             validate={{ required: "Need fill the description" }}
             invalidFields={invalidFields}
             setInvalidFields={setInvalidFields}
+            setIsFocusDescription={setIsFocusDescription}
           />
 
           <div className="flex flex-row items-baseline gap-2">
@@ -206,12 +250,7 @@ const CreateProducts = () => {
             <div className="">
               <FaUpload />
             </div>
-            <input
-              type="file"
-              id="thumb"
-              hidden
-              {...register("thumb", { required: "Need fill" })}
-            />
+            <input type="file" id="thumb" hidden {...register("thumb")} />
             {errors["thumb"] && (
               <small className="text-xs text-main">
                 {errors["thumb"]?.message}
@@ -243,7 +282,7 @@ const CreateProducts = () => {
               id="products"
               hidden
               multiple
-              {...register("images", { required: "Need fill" })}
+              {...register("images")}
             />
             {errors["images"] && (
               <small className="text-xs text-main">
@@ -255,24 +294,25 @@ const CreateProducts = () => {
             <div className="my-4 flex w-full gap-3 flex-wrap">
               {preview.images?.map((el, idx) => (
                 <div
-                  onMouseEnter={() => setHoverElm(el.name)}
+                  //   onMouseEnter={() => setHoverElm(true)}
                   key={idx}
-                  className="w-fit relative"
-                  onMouseLeave={() => setHoverElm(null)}
+                  className="w-fit relative cursor-grabbing"
+                  //   onMouseLeave={() => setHoverElm(false)}
+                  onClick={() => handleRemoveImage(el.name)}
                 >
                   <img
-                    src={el.path}
+                    src={el}
                     alt="product"
                     className="w-[200px] object-contain"
                   />
-                  {hoverElm === el.name && (
+                  {/* {hoverElm && (
                     <div
                       className="absolute cursor-pointer inset-0 bg-overlay flex items-center justify-center"
-                      onClick={() => handleRemoveImage(el.name)}
+                      
                     >
                       <ImBin size={30} color="white" />
                     </div>
-                  )}
+                  )} */}
                 </div>
               ))}
             </div>
@@ -304,7 +344,7 @@ const CreateProducts = () => {
               Loading...
             </button>
           ) : (
-            <Button type="submit">Create new product</Button>
+            <Button type="submit">Update new product</Button>
           )}
         </form>
       </div>
@@ -312,4 +352,4 @@ const CreateProducts = () => {
   );
 };
 
-export default CreateProducts;
+export default memo(UpdateProduct);
