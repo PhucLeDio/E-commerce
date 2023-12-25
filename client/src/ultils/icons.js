@@ -12,7 +12,12 @@ import {
   AiFillCaretDown,
   AiOutlineDashboard,
 } from "react-icons/ai";
-import { FaUserCircle, FaCashRegister, FaCaretRight } from "react-icons/fa";
+import {
+  FaUserCircle,
+  FaCashRegister,
+  FaCaretRight,
+  FaShoppingCart,
+} from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { BiLogOut, BiDotsHorizontalRounded } from "react-icons/bi";
 import { BsShieldShaded, BsReplyFill } from "react-icons/bs";
@@ -46,6 +51,7 @@ const icons = {
   GrTechnology,
   FaCashRegister,
   FaCaretRight,
+  FaShoppingCart,
 };
 
 export default icons;

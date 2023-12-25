@@ -29,13 +29,18 @@ const Products = () => {
   const [activeClick, setActiveClick] = useState(null);
   const [params] = useSearchParams();
   const [sort, setSort] = useState("");
+  const { category } = useParams();
 
   const fetcheProductsByCategory = async (queries) => {
-    const response = await apiGetProducts(queries);
-    if (response.success) setProducts(response);
+    // bỏ category vào thì sợt theo cate đc nhma ko lấy hết đc *cần fix
+    if (category) {
+      const response = await apiGetProducts({ ...queries });
+      if (response.success) setProducts(response);
+    } else {
+      const response = await apiGetProducts({ ...queries, category });
+      if (response.success) setProducts(response);
+    }
   };
-
-  const { category } = useParams();
 
   useEffect(() => {
     let param = [];
@@ -61,7 +66,6 @@ const Products = () => {
     delete queries.from;
 
     const q = { ...priceQuery, ...queries };
-    console.log(q);
     fetcheProductsByCategory(q);
     window.scrollTo(0, 0);
   }, [params]);
@@ -89,6 +93,7 @@ const Products = () => {
       });
     }
   }, [sort]);
+
   return (
     <div className="w-full">
       <div className="h-[81px] flex justify-center items-center bg-gray-100">

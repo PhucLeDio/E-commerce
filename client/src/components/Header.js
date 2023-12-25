@@ -3,11 +3,13 @@ import logo from "../assets/logo2.jpg";
 import icons from "../ultils/icons";
 import { Link } from "react-router-dom";
 import path from "../ultils/path";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { showCart } from "../store/app/appSlice";
 
 const { RiPhoneFill, MdEmail, AiOutlineShoppingCart, FaUserCircle } = icons;
 const Header = () => {
   const { current } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   return (
     <div className=" w-main flex justify-between h-[110px] py-[40px]">
       <Link to={`/${path.HOME}`}>
@@ -37,9 +39,12 @@ const Header = () => {
 
         {current && (
           <Fragment>
-            <div className="cursor-pointer flex items-center justify-center gap-2 px-6 border-r">
+            <div
+              onClick={() => dispatch(showCart())}
+              className="cursor-pointer flex items-center justify-center gap-2 px-6 border-r"
+            >
               <AiOutlineShoppingCart size={24} color="red" />
-              <span>0 item(s)</span>
+              <span>{`${current?.cart.length || 0} item(s)`}</span>
             </div>
 
             <Link

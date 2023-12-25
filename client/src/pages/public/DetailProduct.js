@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { apiGetProduct, apiGetProducts } from "../../apis";
+import { createSearchParams, useNavigate, useParams } from "react-router-dom";
+import { apiGetProduct, apiGetProducts, apiUpdateCart } from "../../apis";
 import {
   Breadcrumb,
   Button,
@@ -18,6 +18,11 @@ import {
 } from "../../ultils/helpers";
 import { productExtraInfomation } from "../../ultils/contants";
 import DOMPurify from "dompurify";
+import { toast } from "react-toastify";
+import { getCurrent } from "../../store/user/asyncActions";
+import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
+import path from "../../ultils/path";
 
 const settings = {
   dots: false,
@@ -36,6 +41,10 @@ const DetailProduct = () => {
   const [quantity, setQuantity] = useState(1);
   const [relatedProducts, setRelatedProducts] = useState(null);
   const [update, setUpdate] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const current = useSelector((state) => state.user);
+
   const fetchProductData = async () => {
     const response = await apiGetProduct(pid);
     if (response.success) {
@@ -71,6 +80,7 @@ const DetailProduct = () => {
     },
     [quantity]
   );
+
   const handleChangeQuantity = useCallback(
     (flag) => {
       if (flag === "minus" && quantity === 1) return;
@@ -79,6 +89,31 @@ const DetailProduct = () => {
     },
     [quantity]
   );
+
+  const handleAddToCart = async () => {
+    if (!current)
+      return Swal.fire({
+        title: "Almost done.....",
+        text: "Please login first",
+        icon: "info",
+        cancelButtonText: "Not now!",
+        showCancelButton: true,
+        confirmButtonText: "Go login page",
+      }).then((rs) => {
+        if (rs.isConfirmed)
+          navigate({
+            pathname: `/${path.LOGIN}`,
+          });
+      });
+    const response = await apiUpdateCart({
+      pid,
+    });
+    if (response.success) {
+      toast.success(response.mes);
+      dispatch(getCurrent());
+    } else toast.error(response.mes);
+  };
+
   const handleClinkImage = (e, el) => (
     e.stopPropagation(), setCurrentImage(el)
   );
@@ -163,7 +198,9 @@ const DetailProduct = () => {
                 handleChangeQuantity={handleChangeQuantity}
               />
             </div>
-            <Button fw>Add to Cart</Button>
+            <Button handleOnClick={handleAddToCart} fw>
+              Add to Cart
+            </Button>
           </div>
         </div>
         <div className="w-1/5">

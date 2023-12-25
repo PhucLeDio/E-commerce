@@ -16,6 +16,13 @@ module.exports = {
       width: {
         main: "1220px",
       },
+      gridRow: {
+        "span-16": "span 16 / span 16",
+      },
+      gridTemplateRows: {
+        16: "repeat(16, minmax(0, 1fr))",
+        layout: "200px minmax(900px, 1fr) 100px",
+      },
       backgroundColor: {
         main: "#ee3131",
         overlay: "rgba(0,0,0,0.7)",

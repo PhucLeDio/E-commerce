@@ -6,11 +6,46 @@ import { renderStarFromNumber } from "../ultils/helpers";
 import { SelectOption } from "./index";
 import icons from "../ultils/icons";
 import { Link } from "react-router-dom";
+import { apiUpdateCart } from "../apis";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { getCurrent } from "../store/user/asyncActions";
+import { FaCartPlus } from "react-icons/fa";
+// import Swal from "sweetalert2";
+// import path from "../ultils/path";
 
-const { AiFillEye, AiOutlineMenu, AiFillHeart } = icons;
+const { AiFillEye, FaShoppingCart, AiFillHeart } = icons;
 
 const Product = ({ productData, isNew, normal }) => {
+  const dispatch = useDispatch();
   const [isShowOption, setIsShowOption] = useState(false);
+  const { current } = useSelector((state) => state.user);
+  const handleClickOptions = async (e, flag) => {
+    e.stopPropagation();
+    if (flag === "CART") {
+      // if (!current)
+      //   return Swal.fire({
+      //     title: "Almost done.....",
+      //     text: "Please login first",
+      //     icon: "info",
+      //     cancelButtonText: "Not now!",
+      //     showCancelButton: true,
+      //     confirmButtonText: "Go login page",
+      //   }).then((rs) => {
+      //     if (rs.isConfirmed) navigate(`/${path.LOGIN}`);
+      //   });
+      const response = await apiUpdateCart({
+        pid: productData._id,
+        color: productData.color,
+      });
+      if (response.success) {
+        toast.success(response.mes);
+        dispatch(getCurrent());
+      } else toast.error(response.mes);
+    }
+    if (flag === "WISHLIST") console.log("wishlist");
+    if (flag === "QUICKVIEW") console.log("quickview");
+  };
   return (
     <div className="w-full text-base px-[10px]">
       <Link
@@ -27,12 +62,31 @@ const Product = ({ productData, isNew, normal }) => {
           setIsShowOption(false);
         }}
       >
-        <div className="w-full relative flex items-center justify-center">
+        <div className="w-full relative">
           {isShowOption && (
             <div className="absolute bottom-[-10px] left-0 right-0 flex justify-center gap-4 animate-slide-top">
-              <SelectOption icon={<AiFillHeart />} />
-              <SelectOption icon={<AiOutlineMenu />} />
-              <SelectOption icon={<AiFillEye />} />
+              <span>
+                <SelectOption icon={<AiFillHeart />} />
+              </span>
+
+              {current?.cart?.some(
+                (el) => el.product === productData._id.toString()
+              ) ? (
+                <span title="Added to cart">
+                  <SelectOption icon={<FaShoppingCart color="green" />} />
+                </span>
+              ) : (
+                <span
+                  title="Add to cart"
+                  onClick={(e) => handleClickOptions(e, "CART")}
+                >
+                  <SelectOption icon={<FaCartPlus />} />
+                </span>
+              )}
+
+              <span>
+                <SelectOption icon={<AiFillEye />} />
+              </span>
             </div>
           )}
           <img
