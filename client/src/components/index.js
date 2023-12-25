@@ -32,3 +32,5 @@ export { default as Comment } from "./Comment";
 export { default as InputForm } from "./InputForm";
 export { default as Select } from "./Select";
 export { default as MarkdownEditor } from "./MarkdownEditor";
+export { default as Cart } from "./Cart";
+export { default as OrderItem } from "./OrderItem";

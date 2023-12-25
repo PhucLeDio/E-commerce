@@ -39,3 +39,16 @@ export const apiGetCurrent = () =>
     url: "/user/current",
     method: "get",
   });
+
+export const apiUpdateCart = (data) =>
+  axios({
+    url: "/user/cart",
+    method: "put",
+    data,
+  });
+
+export const apiRemoveCart = (pid) =>
+  axios({
+    url: "/user/remove-cart/" + pid,
+    method: "delete",
+  });
