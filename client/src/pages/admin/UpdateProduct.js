@@ -67,7 +67,6 @@ const UpdateProduct = ({ editProduct, render, setEditProduct }) => {
         for (let image of images) formData.append("images", image);
       }
       setIsLoading(true);
-      console.log(editProduct._id);
       const response = await apiUpdateProduct(formData, editProduct._id);
       setIsLoading(false);
       if (response.success) {

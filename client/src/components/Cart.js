@@ -91,7 +91,9 @@ const Cart = () => {
         </span>
         <div>
           <Button
-            handleOnClick={() => navigate(`/${path.DETAIL_CART}`)}
+            handleOnClick={() =>
+              navigate(`/${path.MEMBER}/${path.DETAIL_CART}`)
+            }
             style={`rounded-none w-full bg-main py-3 text-white`}
           >
             Shopping cart

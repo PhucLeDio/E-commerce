@@ -1,50 +1,34 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import {
-  Breadcrumb,
-  Button,
+  // Breadcrumb,
+  // Button,
   OrderItem,
   //   SelectQuantity,
 } from "../../components";
-import { useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { formatMoney } from "../../ultils/helpers";
+import path from "../../ultils/path";
 // import { ImBin } from "react-icons/im";
 // import { apiRemoveCart } from "../../apis";
 // import { getCurrent } from "../../store/user/asyncActions";
 // import { toast } from "react-toastify";
 
 const DetailCart = () => {
-  const { current } = useSelector((state) => state.user);
-  const location = useLocation();
-  //   const [quantity, setQuantity] = useState(0);
-  //   const dispatch = useDispatch();
+  const { currentCart } = useSelector((state) => state.user);
+  // const location = useLocation();
 
-  //   const handleQuantity = (number) => {
-  //     if (+number > 1) setQuantity(number);
-  //   };
-
-  //   const handleChangeQuantity = useCallback(
-  //     (flag) => {
-  //       if (flag === "minus" && quantity === 1) return;
-  //       if (flag === "minus") setQuantity((prev) => +prev - 1);
-  //       if (flag === "plus") setQuantity((prev) => +prev + 1);
-  //     },
-  //     [quantity]
-  //   );
-
-  //   const removeCart = async (pid) => {
-  //     const response = await apiRemoveCart(pid);
-  //     if (response.success) {
-  //       dispatch(getCurrent());
-  //     } else toast.error(response.mes);
-  //   };
+  const handleChangeQuantities = (pid, quantity, color) => {
+    console.log({ pid, quantity, color });
+    console.log(currentCart);
+  };
 
   return (
     <div className="w-full">
       <div className="h-[81px] flex justify-center items-center bg-gray-100">
         <div className="w-main">
-          <h3 className="font-semibold">My Cart</h3>
-          <Breadcrumb category={location?.pathname.substring(1)} />
+          <h3 className="font-semibold text-2xl">My Cart</h3>
+          {/* <Breadcrumb category={location?.pathname.substring(1)} /> */}
         </div>
       </div>
 
@@ -55,8 +39,12 @@ const DetailCart = () => {
           <span className="col-span-3 w-full text-center">Price</span>
         </div>
 
-        {current?.cart?.map((el, index) => (
-          <OrderItem el={el} key={index} />
+        {currentCart?.map((el, index) => (
+          <OrderItem
+            el={el}
+            handleChangeQuantities={handleChangeQuantities}
+            key={index}
+          />
         ))}
       </div>
 
@@ -65,7 +53,7 @@ const DetailCart = () => {
           <span className="uppercase font-bold">Subtotal:</span>
           <span>
             {formatMoney(
-              current?.cart?.reduce(
+              currentCart?.reduce(
                 (sum, el) => Number(sum + el.product?.price),
                 0
               )
@@ -75,7 +63,13 @@ const DetailCart = () => {
         <span className="italic">
           Shipping, taxes, and discounts calculated at checkout.
         </span>
-        <Button>Checkout</Button>
+        <Link
+          target="_blank"
+          className="text-white bg-main hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
+          to={`/${path.CHECKOUT}`}
+        >
+          Checkout
+        </Link>
       </div>
     </div>
   );

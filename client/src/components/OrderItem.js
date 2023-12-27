@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 // import { useLocation } from "react-router-dom";
 import { apiRemoveCart } from "../apis";
@@ -8,7 +8,7 @@ import { ImBin } from "react-icons/im";
 import SelectQuantity from "./SelectQuantity";
 import { formatMoney } from "../ultils/helpers";
 
-const OrderItem = ({ el }) => {
+const OrderItem = ({ el, handleChangeQuantities }) => {
   //   const { current } = useSelector((state) => state.user);
   //   const location = useLocation();
   const [quantity, setQuantity] = useState(1);
@@ -26,6 +26,11 @@ const OrderItem = ({ el }) => {
     },
     [quantity]
   );
+
+  useEffect(() => {
+    handleChangeQuantities &&
+      handleChangeQuantities(el.product?._id, quantity, el.color);
+  }, [quantity]);
 
   const removeCart = async (pid) => {
     const response = await apiRemoveCart(pid);
@@ -66,7 +71,7 @@ const OrderItem = ({ el }) => {
           </div>
         </span>
         <span className="col-span-3 w-full text-center h-full flex items-center justify-center">
-          {formatMoney(el.product?.price) + " VND"}
+          {formatMoney(el.product?.price * quantity) + " VND"}
         </span>
       </div>
     </div>

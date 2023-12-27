@@ -1,6 +1,7 @@
 // import { icons } from "react-icons/lib";
 import path from "./path";
 import icons from "./icons";
+import { TbJewishStarFilled } from "react-icons/tb";
 
 const {
   BsShieldShaded,
@@ -160,6 +161,37 @@ export const adminSideBar = [
     text: "Manage orders",
     path: `${path.MANAGE_ORDER}`,
     icon: <FaCashRegister size={20} />,
+  },
+];
+
+export const memberSideBar = [
+  {
+    id: 1,
+    type: "SINGLE",
+    text: "Personal",
+    path: `${path.PERSONAL}`,
+    icon: <AiOutlineDashboard size={20} />,
+  },
+  {
+    id: 2,
+    type: "SINGLE",
+    text: "My cart",
+    path: `${path.MY_CART}`,
+    icon: <MdGroup size={20} />,
+  },
+  {
+    id: 3,
+    type: "SINGLE",
+    text: "Buy histories",
+    path: `${path.HISTORY}`,
+    icon: <FaCashRegister size={20} />,
+  },
+  {
+    id: 4,
+    type: "SINGLE",
+    text: "Wishlist",
+    path: `${path.WISHLIST}`,
+    icon: <TbJewishStarFilled size={20} />,
   },
 ];
 
