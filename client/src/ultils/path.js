@@ -11,6 +11,7 @@ const path = {
   FINAL_REGISTER: "finalregister/:status",
   RESET_PASSWORD: "reset-password/:token",
   DETAIL_CART: "my-cart",
+  CHECKOUT: "checkout",
 
   // Admin
   ADMIN: "admin",
@@ -23,6 +24,9 @@ const path = {
   // Member
   MEMBER: "member",
   PERSONAL: "personal",
+  MY_CART: "my-cart",
+  HISTORY: "buy-history",
+  WISHLIST: "wishlist",
 };
 
 export default path;
