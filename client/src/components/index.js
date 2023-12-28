@@ -32,6 +32,8 @@ export { default as Comment } from "./Comment";
 export { default as InputForm } from "./InputForm";
 export { default as Select } from "./Select";
 export { default as MarkdownEditor } from "./MarkdownEditor";
+export { default as Paypal } from "./Paypal";
 export { default as Cart } from "./Cart";
 export { default as OrderItem } from "./OrderItem";
 export { default as MemberSidebar } from "./MemberSidebar";
+export { default as Congrat } from "./Congrat";
