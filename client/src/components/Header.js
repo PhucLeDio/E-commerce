@@ -68,12 +68,17 @@ const Header = () => {
               onClick={(e) => setIsShowOption((prev) => !prev)}
               id="profile"
             >
-              <FaUserCircle size={24} />
+              {current.avatar ? (
+                <img src={current.avatar} className="w-10 h-10 rounded-full" />
+              ) : (
+                <FaUserCircle size={24} />
+              )}
+              {/* <FaUserCircle size={24} /> */}
               <span>Profile</span>
               {isShowOption && (
                 <div
                   onClick={(e) => e.stopPropagation()}
-                  className="absolute flex flex-col top-full left-0 bg-gray-100 border min-w-[150px] py-2"
+                  className="absolute flex flex-col top-full left-0 bg-gray-100 border min-w-[135px] py-2"
                 >
                   <Link
                     className="p-2 w-full"
@@ -86,7 +91,7 @@ const Header = () => {
                       className="p-2 w-full"
                       to={`/${path.ADMIN}/${path.DASHBOARD}`}
                     >
-                      Admin Workspace
+                      Dashboard
                     </Link>
                   )}
                   <span
