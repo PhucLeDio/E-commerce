@@ -133,7 +133,8 @@ const getCurrent = asyncHandler(async (req, res) => {
         path: "product",
         select: "title thumb price",
       },
-    });
+    })
+    .populate("wishlist", "title thumb price color");
   return res.status(200).json({
     success: user ? true : false,
     rs: user ? user : "user not found",
@@ -301,16 +302,31 @@ const updateUserAddress = asyncHandler(async (req, res) => {
 
 const updateCart = asyncHandler(async (req, res) => {
   const { _id } = req.user;
-  const { pid, quantity = 1, color = "WHITE" } = req.body;
+  const {
+    pid,
+    quantity = 1,
+    color = "WHITE",
+    price,
+    thumbnail,
+    title,
+  } = req.body;
   if (!pid) throw new Error("Missing inputs");
-  const cart = await User.findById(_id).select("cart");
-  const alreadyProduct = cart?.cart?.find(
+  const user = await User.findById(_id).select("cart");
+  const alreadyProduct = user?.cart?.find(
     (el) => el.product.toString() === pid
   );
   if (alreadyProduct) {
     const response = await User.updateOne(
       { cart: { $elemMatch: alreadyProduct } },
-      { $set: { "cart.$.quantity": quantity, "cart.$.color": color } },
+      {
+        $set: {
+          "cart.$.quantity": quantity,
+          "cart.$.color": color,
+          "cart.$.price": price,
+          "cart.$.thumbnail": thumbnail,
+          "cart.$.title": title,
+        },
+      },
       { new: true }
     );
     return res.status(200).json({
@@ -320,7 +336,11 @@ const updateCart = asyncHandler(async (req, res) => {
   } else {
     const response = await User.findByIdAndUpdate(
       _id,
-      { $push: { cart: { product: pid, quantity, color } } },
+      {
+        $push: {
+          cart: { product: pid, quantity, color, price, thumbnail, title },
+        },
+      },
       { new: true }
     );
     return res.status(200).json({
@@ -353,6 +373,34 @@ const removeProductInCart = asyncHandler(async (req, res) => {
   });
 });
 
+const updateWishlist = asyncHandler(async (req, res) => {
+  const { pid } = req.params;
+  const { _id } = req.user;
+  const user = await User.findById(_id);
+  const alreadyInWishlist = user.wishlist?.find((el) => el.toString() === pid);
+  if (alreadyInWishlist) {
+    const response = await User.findByIdAndUpdate(
+      _id,
+      { $pull: { wishlist: pid } },
+      { new: true }
+    );
+    return res.json({
+      success: response ? true : false,
+      mes: response ? "Updated!" : "Failed to update wishlist!",
+    });
+  } else {
+    const response = await User.findByIdAndUpdate(
+      _id,
+      { $push: { wishlist: pid } },
+      { new: true }
+    );
+    return res.json({
+      success: response ? true : false,
+      mes: response ? "Updated!" : "Failed to update wishlist!",
+    });
+  }
+});
+
 module.exports = {
   register,
   login,
@@ -369,4 +417,5 @@ module.exports = {
   updateCart,
   finalRegister,
   removeProductInCart,
+  updateWishlist,
 };
