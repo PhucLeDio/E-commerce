@@ -256,7 +256,6 @@ export const voteOptions = [
   },
 ];
 
-
 export const statusOrders = [
   {
     label: "Cancelled",
@@ -265,8 +264,8 @@ export const statusOrders = [
   {
     label: "Succeed",
     value: "Succeed",
-  }
- ],
+  },
+];
 export const roles = [
   {
     code: "admin",

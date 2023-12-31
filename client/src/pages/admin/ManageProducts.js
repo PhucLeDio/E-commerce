@@ -103,9 +103,9 @@ const ManageProducts = () => {
           />
         </form>
       </div>
-      <table className="table-auto">
+      <table className="table-auto m-4 border">
         <thead>
-          <tr className="border bg-main text-white border-white">
+          <tr className="border bg-main text-white">
             <th className="py-2">Order</th>
             <th className="py-2">Thumb</th>
             <th className="w-[300px] py-2">Title</th>

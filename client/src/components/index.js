@@ -38,3 +38,6 @@ export { default as OrderItem } from "./OrderItem";
 export { default as MemberSidebar } from "./MemberSidebar";
 export { default as Congrat } from "./Congrat";
 export { default as CustomSelect } from "./CustomSelect";
+export { default as HappyNewYear } from "./HappyNewYear";
+// export { default as Firework } from "./Firework";
+// export { default as Firework } from "./Firework";

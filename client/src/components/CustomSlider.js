@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import Slider from "react-slick";
 import { Product } from "./";
 
-const settings = {
+const defaultSettings = {
   dots: false,
   infinite: true,
   speed: 500,
@@ -12,11 +12,13 @@ const settings = {
   autoplaySpeed: 3000,
 };
 
-const CustomSlider = ({ products, activedTab, normal }) => {
+const CustomSlider = ({ products, activedTab, normal, settings1 }) => {
+  const sliderSettings = settings1 ? { ...settings1 } : { ...defaultSettings };
+
   return (
     <>
       {products && (
-        <Slider className="custom-slider" {...settings}>
+        <Slider className="custom-slider" {...sliderSettings}>
           {products?.map((el, index) => (
             <Product
               key={index}
