@@ -255,6 +255,18 @@ export const voteOptions = [
     text: "Perfect",
   },
 ];
+
+
+export const statusOrders = [
+  {
+    label: "Cancelled",
+    value: "Cancelled",
+  },
+  {
+    label: "Succeed",
+    value: "Succeed",
+  }
+ ],
 export const roles = [
   {
     code: "admin",

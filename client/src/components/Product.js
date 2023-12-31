@@ -6,7 +6,7 @@ import { renderStarFromNumber } from "../ultils/helpers";
 import { SelectOption } from "./index";
 import icons from "../ultils/icons";
 import { Link } from "react-router-dom";
-import { apiUpdateCart } from "../apis";
+import { apiUpdateCart, apiUpdateWishlist } from "../apis";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrent } from "../store/user/asyncActions";
@@ -19,6 +19,7 @@ const { AiFillEye, FaShoppingCart, AiFillHeart } = icons;
 const Product = ({ productData, isNew, normal }) => {
   const dispatch = useDispatch();
   const [isShowOption, setIsShowOption] = useState(false);
+  // const [isInWishlist, setIsInWishlist] = useState([])
   const { current } = useSelector((state) => state.user);
   const handleClickOptions = async (e, flag) => {
     e.stopPropagation();
@@ -43,12 +44,23 @@ const Product = ({ productData, isNew, normal }) => {
         dispatch(getCurrent());
       } else toast.error(response.mes);
     }
-    if (flag === "WISHLIST") console.log("wishlist");
+    if (flag === "WISHLIST") {
+      const response = await apiUpdateWishlist(productData._id);
+      if (response.success) {
+        toast.success(response.mes);
+        dispatch(getCurrent());
+      } else {
+        toast.error(response.mes);
+      }
+
+      if (current?.wishlist === productData._id) {
+      }
+    }
     if (flag === "QUICKVIEW") console.log("quickview");
   };
   return (
     <div className="w-full text-base px-[10px]">
-      <Link
+      <div
         className="w-full border p-[15px] flex flex-col items-center"
         to={`/${productData?.category?.toLowerCase()}/${productData?._id}/${
           productData?.title
@@ -65,7 +77,7 @@ const Product = ({ productData, isNew, normal }) => {
         <div className="w-full relative">
           {isShowOption && (
             <div className="absolute bottom-[-10px] left-0 right-0 flex justify-center gap-4 animate-slide-top">
-              <span>
+              <span onClick={(e) => handleClickOptions(e, "WISHLIST")}>
                 <SelectOption icon={<AiFillHeart />} />
               </span>
 
@@ -84,30 +96,48 @@ const Product = ({ productData, isNew, normal }) => {
                 </span>
               )}
 
-              <span>
+              <Link
+                to={`/${productData?.category?.toLowerCase()}/${
+                  productData?._id
+                }/${productData?.title}`}
+                onMouseEnter={(e) => {
+                  e.stopPropagation();
+                  setIsShowOption(true);
+                }}
+                onMouseLeave={(e) => {
+                  e.stopPropagation();
+                  setIsShowOption(false);
+                }}
+              >
                 <SelectOption icon={<AiFillEye />} />
-              </span>
+              </Link>
             </div>
           )}
-          <img
-            src={
-              productData?.thumb ||
-              "https://t4.ftcdn.net/jpg/03/08/68/19/360_F_308681935_VSuCNvhuif2A8JknPiocgGR2Ag7D1ZqN.jpg"
-            }
-            alt=""
-            className="w-[274.4px] h-[280px] object-cover"
-          />
-          {!normal && (
+          <Link
+            to={`/${productData?.category?.toLowerCase()}/${productData?._id}/${
+              productData?.title
+            }`}
+          >
             <img
-              src={isNew ? label : newlabel}
-              alt=""
-              className={
-                isNew
-                  ? "absolute top-[-1px] left-[185px] w-[70px]"
-                  : "absolute top-[-1px] left-[185px] w-[100px] h-[35px] object-cover"
+              src={
+                productData?.thumb ||
+                "https://t4.ftcdn.net/jpg/03/08/68/19/360_F_308681935_VSuCNvhuif2A8JknPiocgGR2Ag7D1ZqN.jpg"
               }
+              alt=""
+              className="w-[274.4px] h-[280px] object-cover"
             />
-          )}
+            {!normal && (
+              <img
+                src={isNew ? label : newlabel}
+                alt=""
+                className={
+                  isNew
+                    ? "absolute top-[-1px] left-[185px] w-[70px]"
+                    : "absolute top-[-1px] left-[185px] w-[100px] h-[35px] object-cover"
+                }
+              />
+            )}
+          </Link>
         </div>
         <div className="flex flex-col mt-[15px] items-start gap-1 w-full">
           <span className="line-clamp-1">{productData?.title}</span>
@@ -120,7 +150,7 @@ const Product = ({ productData, isNew, normal }) => {
           </span>
           <span>{`${formatMoney(productData?.price)} VND`}</span>
         </div>
-      </Link>
+      </div>
     </div>
   );
 };

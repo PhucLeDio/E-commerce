@@ -27,6 +27,7 @@ router.delete(
   [verifyAccessToken],
   ctrls.removeProductInCart
 );
+router.put("/wishlist/:pid", [verifyAccessToken], ctrls.updateWishlist);
 router.put("/:uid", [verifyAccessToken, isAdmin], ctrls.updateUserByAdmin); // role là user thì cook nhé
 
 module.exports = router;

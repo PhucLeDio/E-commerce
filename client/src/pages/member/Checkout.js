@@ -35,7 +35,7 @@ const Checkout = () => {
 
   // console.log(current.cart[0].product?.title);
 
-  // console.log(current?.cart);
+  // console.log(current);
 
   return (
     <div className="p-8 w-full grid grid-cols-10 h-full max-h-screen overflow-y-auto gap-6">

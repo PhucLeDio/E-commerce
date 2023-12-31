@@ -37,3 +37,4 @@ export { default as Cart } from "./Cart";
 export { default as OrderItem } from "./OrderItem";
 export { default as MemberSidebar } from "./MemberSidebar";
 export { default as Congrat } from "./Congrat";
+export { default as CustomSelect } from "./CustomSelect";
