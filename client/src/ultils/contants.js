@@ -256,6 +256,7 @@ export const voteOptions = [
   },
 ];
 
+
 export const statusOrders = [
   {
     label: "Cancelled",
@@ -264,5 +265,25 @@ export const statusOrders = [
   {
     label: "Succeed",
     value: "Succeed",
+  }
+ ],
+export const roles = [
+  {
+    code: "admin",
+    value: "Admin",
+  },
+  {
+    code: "user",
+    value: "User",
+  },
+];
+export const blockStatus = [
+  {
+    code: true,
+    value: "Blocked",
+  },
+  {
+    code: false,
+    value: "Actived",
   },
 ];

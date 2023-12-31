@@ -96,3 +96,6 @@ input {
 code {
   white-space: inherit;
 }
+.w500 {
+  width: 250px;
+}
