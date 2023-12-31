@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-
+import clsx from "clsx";
 const inputField = ({
   value,
   setValue,
@@ -7,6 +7,7 @@ const inputField = ({
   type,
   invalidFields,
   setInvalidFields,
+  style,
 }) => {
   // Check if nameKey is defined before using slice
   const placeholder =
@@ -18,13 +19,16 @@ const inputField = ({
     <div>
       <input
         type={type || "text"}
-        className="w-full text-black py-2 my-2 bg-transparent border-b border-black outline-none focus:outline-none"
+        className={clsx(
+          "w-full text-black py-2 my-2 bg-transparent border-b border-black outline-none focus:outline-none",
+          style
+        )}
         placeholder={placeholder}
         value={value}
         onChange={(e) =>
           setValue((prev) => ({ ...prev, [nameKey]: e.target.value }))
         }
-        onFocus={() => setInvalidFields([])}
+        onFocus={() => setInvalidFields && setInvalidFields([])}
       />
       {invalidFields?.some((el) => el.name === nameKey) && (
         <small className="text-main tetx-[10px] italic">

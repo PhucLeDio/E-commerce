@@ -255,3 +255,23 @@ export const voteOptions = [
     text: "Perfect",
   },
 ];
+export const roles = [
+  {
+    code: "admin",
+    value: "Admin",
+  },
+  {
+    code: "user",
+    value: "User",
+  },
+];
+export const blockStatus = [
+  {
+    code: true,
+    value: "Blocked",
+  },
+  {
+    code: false,
+    value: "Actived",
+  },
+];
