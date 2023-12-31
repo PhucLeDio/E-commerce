@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Sidebar,
   Banner,
@@ -6,8 +6,11 @@ import {
   DealDaily,
   FeatureProducts,
   CustomSlider,
+  Congrat,
+  HappyNewYear,
 } from "../../components";
 import { useSelector } from "react-redux";
+// import { Fireworks } from "fireworks-js";
 // import Slider from "react-slick";
 
 // const settings = {
@@ -20,6 +23,16 @@ import { useSelector } from "react-redux";
 //   autoplaySpeed: 3000,
 // };
 
+const settings1 = {
+  dots: false,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 4,
+  slidesToScroll: 1,
+  autoplay: true,
+  autoplaySpeed: 3000,
+};
+
 const Home = () => {
   const { newProducts } = useSelector((state) => state.products);
   const { categories } = useSelector((state) => state.app);
@@ -29,7 +42,11 @@ const Home = () => {
 
   return (
     <>
+      <div className="w-full">
+        <HappyNewYear />
+      </div>
       <div className="w-main flex mt-6">
+        {/* <Congrat /> */}
         <div className="flex flex-col gap-5 w-[25%] flex-auto">
           <Sidebar />
           <DealDaily />
@@ -49,7 +66,7 @@ const Home = () => {
           NEW ARRIVALS
         </h3>
         <div className="mt-4 mx-[-10px]">
-          <CustomSlider products={newProducts} />
+          <CustomSlider products={newProducts} settings1={settings1} />
         </div>
       </div>
 
@@ -89,6 +106,7 @@ const Home = () => {
         <h3 className="text-[20px] font-semibold py-[15px] border-b-2 border-main">
           BLOG POSTS
         </h3>
+        <div className="mt-4 mx-[-10px]"></div>
       </div>
     </>
   );

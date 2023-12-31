@@ -1,6 +1,7 @@
 import React, { useState, useEffect, memo } from "react";
 import { ProductCard } from "./index";
 import { apiGetProducts } from "../apis";
+import { Link } from "react-router-dom";
 
 const FeatureProducts = () => {
   const [products, setProducts] = useState(null);
@@ -21,7 +22,7 @@ const FeatureProducts = () => {
       <h3 className="text-[20px] font-semibold py-[15px] border-b-2 border-main">
         FEATURED PRODUCTS
       </h3>
-      <div className="flex flex-wrap mt-[15px] mx-[-10px]">
+      <Link to={`/:category`} className="flex flex-wrap mt-[15px] mx-[-10px]">
         {products?.map((el) => (
           <ProductCard
             key={el._id}
@@ -31,7 +32,7 @@ const FeatureProducts = () => {
             price={el.price}
           />
         ))}
-      </div>
+      </Link>
       <div className="flex justify-between">
         <img
           src="https://digital-world-2.myshopify.com/cdn/shop/files/banner1-bottom-home2_b96bc752-67d4-45a5-ac32-49dc691b1958_600x.jpg?v=1613166661"

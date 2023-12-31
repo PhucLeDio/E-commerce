@@ -13,7 +13,7 @@ import useDebounce from "../../hooks/useDebounce";
 import { useSearchParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { Swal } from "sweetalert2";
+import Swal from "sweetalert2";
 import clsx from "clsx";
 
 const ManageUser = () => {
@@ -76,24 +76,26 @@ const ManageUser = () => {
     });
   };
 
+  console.log(users);
+
   return (
     <div className={clsx("w-full", editElm && "pl-20")}>
       <h1 className="h-[75px] flex justify-between items-center text-3xl font-bold px-4 pl-20 border-b">
         <span>Manage User</span>
       </h1>
-      <div className="w-full pl-20">
+      <div className="w-full p-5">
         <div className="flex justify-end py-4">
           <InputField
             nameKey={"q"}
             value={queries.q}
             setValue={setQueries}
-            style="w500"
+            style="w-[500px]"
           />
         </div>
         <form onSubmit={handleSubmit(handleUpdate)}>
           {editElm && <Button type="submit">Update</Button>}
-          <table className="table-auto mb-6 text-left w-full">
-            <thead className="font-bold bg-gray-700 text-[13px] text-white">
+          <table className="table-auto mb-5 text-left w-full">
+            <thead className="font-bold bg-main text-[13px] text-white">
               <tr className="border border-gray-500">
                 <th className="px-4 py-2">#</th>
                 <th className="px-4 py-2">Email</th>
@@ -214,7 +216,7 @@ const ManageUser = () => {
                     )}
                   </td>
                   <td className="py-2 px-4">
-                    {moment(el.creativeAt).format("DD/MM/YYYY")}
+                    {moment(el.createdAt).format("DD/MM/YYYY")}
                   </td>
                   <td className="py-2 px-4">
                     {editElm?._id === el._id ? (
@@ -227,7 +229,7 @@ const ManageUser = () => {
                     ) : (
                       <span
                         onClick={() => setEditElm(el)}
-                        className="px-2 text-orange-600 hover:underline cursor-pointer"
+                        className="px-2 text-gray-500 hover:underline cursor-pointer"
                       >
                         Edit
                       </span>
