@@ -124,6 +124,7 @@ const ProductInfomation = ({
             {ratings?.map((el) => (
               <Comment
                 key={el._id}
+                image={current?.avatar}
                 star={el.star}
                 updatedAt={el.updatedAt}
                 comment={el.comment}

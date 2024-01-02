@@ -1,22 +1,16 @@
 import React from "react";
-import avatar from "../assets/avt.jpg";
+// import avatar from "../assets/avt.jpg";
 import moment from "moment";
 import { renderStarFromNumber } from "../ultils/helpers";
 
-const Comment = ({
-  image = avatar,
-  name = "Anonymous",
-  updatedAt,
-  comment,
-  star,
-}) => {
+const Comment = ({ image, name = "Anonymous", updatedAt, comment, star }) => {
   return (
     <div className="flex gap-4">
       <div className="p-4 flex-none ">
         <img
           src={image}
           alt="avatar"
-          className="w-[25px] h-[25px] object-cover rounded-full "
+          className="w-[30px] h-[30px] object-cover rounded-full "
         />
       </div>
       <div className="flex flex-col flex-auto ">

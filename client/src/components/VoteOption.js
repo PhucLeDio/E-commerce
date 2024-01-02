@@ -1,4 +1,3 @@
-
 import React, { memo, useRef, useEffect, useState } from "react";
 import logo from "../assets/logo.png";
 import { voteOptions } from "../ultils/contants";
@@ -22,7 +21,7 @@ const VoteOption = ({ nameProduct, handleSubmitVoteOption }) => {
     >
       <img src={logo} alt="logo" className="w-[300px] my-8 object-contain" />
       <h2 className="text-center text-medium text-lg">
-        {`Voting product ${nameProduct}`}
+        {`Voting product "${nameProduct}"`}
       </h2>
 
       <textarea
