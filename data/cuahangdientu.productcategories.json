@@ -1,0 +1,161 @@
+[{
+  "_id": {
+    "$oid": "65119b851920ab488c39512e"
+  },
+  "title": "Laptop",
+  "brand": [
+    "Asus",
+    "Dell",
+    "Acer",
+    "Lenovo",
+    "HP",
+    "Macbook"
+  ],
+  "image": "//digital-world-2.myshopify.com/cdn/shop/files/laptop_300x.jpg?v=1613166811",
+  "createdAt": {
+    "$date": "2023-09-25T14:39:02.002Z"
+  },
+  "updatedAt": {
+    "$date": "2023-09-25T14:39:02.002Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65119b851920ab488c39512f"
+  },
+  "title": "Speaker",
+  "brand": [],
+  "image": "//digital-world-2.myshopify.com/cdn/shop/products/z2_2_345x550.jpg?v=1491404907",
+  "createdAt": {
+    "$date": "2023-09-25T14:39:02.002Z"
+  },
+  "updatedAt": {
+    "$date": "2023-09-25T14:39:02.002Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65119b851920ab488c39512d"
+  },
+  "title": "Tablet",
+  "brand": [
+    "iPad",
+    "Samsung",
+    "Acer",
+    "Asus",
+    "Lenovo",
+    "Haier"
+  ],
+  "image": "//digital-world-2.myshopify.com/cdn/shop/files/pc-1_300x.jpg?v=1613166682",
+  "createdAt": {
+    "$date": "2023-09-25T14:39:02.002Z"
+  },
+  "updatedAt": {
+    "$date": "2023-09-25T14:39:02.002Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65119b851920ab488c39512c"
+  },
+  "title": "Smartphone",
+  "brand": [
+    "Apple",
+    "Samsung",
+    "LG",
+    "Asus",
+    "Nokia",
+    "BlackBerry"
+  ],
+  "image": "//digital-world-2.myshopify.com/cdn/shop/files/mobile-devices_300x.jpg?v=1613166682",
+  "createdAt": {
+    "$date": "2023-09-25T14:39:02.002Z"
+  },
+  "updatedAt": {
+    "$date": "2023-09-25T14:39:02.002Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65119b851920ab488c395132"
+  },
+  "title": "Television",
+  "brand": [
+    "Apple",
+    "Samsung",
+    "LG",
+    "Asus",
+    "Nokia",
+    "BlackBerry"
+  ],
+  "image": "//digital-world-2.myshopify.com/cdn/shop/files/television_300x.jpg?v=1613166810",
+  "createdAt": {
+    "$date": "2023-09-25T14:39:02.002Z"
+  },
+  "updatedAt": {
+    "$date": "2023-09-25T14:39:02.002Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65119b851920ab488c395133"
+  },
+  "title": "Printer",
+  "brand": [
+    "Samsung",
+    "Acer",
+    "Asus",
+    "Lenovo",
+    "Haier"
+  ],
+  "image": "//digital-world-2.myshopify.com/cdn/shop/files/printer_300x.jpg?v=1613166810",
+  "createdAt": {
+    "$date": "2023-09-25T14:39:02.002Z"
+  },
+  "updatedAt": {
+    "$date": "2023-09-25T14:39:02.002Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65119b851920ab488c395130"
+  },
+  "title": "Camera",
+  "brand": [],
+  "image": "//digital-world-2.myshopify.com/cdn/shop/products/z1_1_370x.jpg?v=1491404913",
+  "createdAt": {
+    "$date": "2023-09-25T14:39:02.002Z"
+  },
+  "updatedAt": {
+    "$date": "2023-09-25T14:39:02.002Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65119b851920ab488c395131"
+  },
+  "title": "Accessories",
+  "brand": [
+    "SmartsWatches",
+    "Headphone",
+    "Bluetooth",
+    "Keyboard",
+    "Mouse",
+    "Cases"
+  ],
+  "image": "//digital-world-2.myshopify.com/cdn/shop/files/headphone_8467ba67-70c7-4977-b57e-8847d56549c6_300x.jpg?v=1613166811",
+  "createdAt": {
+    "$date": "2023-09-25T14:39:02.002Z"
+  },
+  "updatedAt": {
+    "$date": "2023-09-25T14:39:02.002Z"
+  },
+  "__v": 0
+}]
